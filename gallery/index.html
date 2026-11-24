@@ -1,0 +1,145 @@
+<title>Luz Motion</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: specimen-sheet grid of live phone-size stages; a docked tray composes the prompt. */
+:root {
+  --bg: #e9e8e6;        /* the grey paper of the source reels */
+  --panel: #f6f5f3;
+  --stage: #efeeec;
+  --ink: #161616;
+  --muted: #6d6b68;
+  --line: #d3d1cd;
+  --accent: #1f4bd8;    /* selection / primary action */
+  --accent-ink: #ffffff;
+  --ok: #187a3e;
+  --f-ui: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* demo tokens — demos read these so they follow the theme */
+  --d-fg: #161616; --d-bg: #f7f6f4; --d-soft: #dcdad6; --d-mid: #a9a6a1; --d-accent: #1f4bd8;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121212; --panel: #1b1b1b; --stage: #161616; --ink: #ecebe8; --muted: #9b9893; --line: #2d2c2a;
+  --accent: #7d9bff; --accent-ink: #0b0f1d; --ok: #5fcf8a;
+  --d-fg: #ecebe8; --d-bg: #202020; --d-soft: #353432; --d-mid: #6b6965; --d-accent: #7d9bff;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121212; --panel: #1b1b1b; --stage: #161616; --ink: #ecebe8; --muted: #9b9893; --line: #2d2c2a;
+  --accent: #7d9bff; --accent-ink: #0b0f1d; --ok: #5fcf8a;
+  --d-fg: #ecebe8; --d-bg: #202020; --d-soft: #353432; --d-mid: #6b6965; --d-accent: #7d9bff;
+  color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--f-ui);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 140px; }
+button, input, select, textarea { font: inherit; color: inherit }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.wrap { max-width: 1240px; margin: 0 auto }
+
+header.top { padding-block: 28px 18px; display: grid; gap: 10px }
+header.top h1 { margin: 0; font-weight: 500; font-size: clamp(30px, 5vw, 44px); letter-spacing: -0.02em; text-wrap: balance }
+header.top h1 small { font-family: var(--f-mono); font-size: 13px; letter-spacing: .08em; color: var(--muted); margin-left: 10px; font-weight: 400; vertical-align: middle; border: 1px solid var(--line); border-radius: 99px; padding: 2px 9px }
+header.top p { margin: 0; color: var(--muted); max-width: 64ch }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: grid; gap: 10px; border-bottom: 1px solid var(--line) }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+.search { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.search input { flex: 1 1 240px; min-width: 0; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 10px 12px }
+#count { font-family: var(--f-mono); font-size: 12px; color: var(--muted) }
+#chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px }
+.chip { flex: none; border: 1px solid var(--line); background: transparent; border-radius: 99px; padding: 6px 12px; cursor: pointer; font-size: 13px; white-space: nowrap }
+.chip span { font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin-left: 4px }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink) }
+.chip[aria-pressed="true"] span { color: inherit; opacity: .7 }
+
+#grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 268px), 1fr)); gap: 14px; padding-block: 18px }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; transition: border-color .2s, box-shadow .2s }
+.card.on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) }
+.stage { position: relative; height: 230px; background: var(--stage); border-bottom: 1px solid var(--line); overflow: hidden; display: grid; place-items: center; color: var(--d-fg); font-size: 12px; user-select: none; -webkit-user-select: none; touch-action: manipulation }
+.meta { padding: 12px 14px 4px; display: grid; gap: 4px; min-width: 0 }
+.row1 { display: flex; justify-content: space-between; gap: 8px; align-items: center }
+.id { font-family: var(--f-mono); font-size: 11px; color: var(--muted) }
+.trig { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px }
+.meta h3 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em }
+.motion { margin: 0; font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+.timing { margin: 0; font-family: var(--f-mono); font-size: 11px; color: var(--muted) }
+.actions { display: flex; gap: 6px; padding: 10px 14px 14px; align-items: center; flex-wrap: wrap }
+.pick { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; cursor: pointer; margin-right: auto; min-height: 36px }
+.pick input { width: 18px; height: 18px; accent-color: var(--accent) }
+.ghost { border: 1px solid var(--line); background: transparent; border-radius: 8px; padding: 6px 10px; font-size: 12.5px; cursor: pointer; min-height: 34px }
+.ghost:hover { border-color: var(--muted) }
+.ghost.ok, .primary.ok { color: var(--ok); border-color: var(--ok) }
+
+/* tray */
+#tray { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--panel); border-top: 1px solid var(--line);
+  padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  box-shadow: 0 -8px 24px rgba(0,0,0,.06); transform: translateY(0); transition: transform .3s cubic-bezier(.2,.8,.2,1) }
+#tray .in { max-width: 1240px; margin: 0 auto; display: grid; gap: 10px }
+.tray-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.tray-head strong { font-weight: 600 }
+#sel-n { font-family: var(--f-mono) }
+#tray-list { display: flex; gap: 6px; overflow-x: auto; flex: 1 1 200px; min-width: 0; scrollbar-width: thin }
+.tag { flex: none; font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 4px 8px; cursor: pointer }
+.primary { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); border-radius: 9px; padding: 8px 14px; font-weight: 600; cursor: pointer; min-height: 40px }
+#tray:not(.has) .primary, #tray:not(.has) #clear { opacity: .4; pointer-events: none }
+.tray-body { display: none; gap: 10px; grid-template-columns: minmax(0, 340px) minmax(0, 1fr) }
+#tray.open .tray-body { display: grid }
+.fields { display: grid; gap: 8px; align-content: start }
+.fields label { display: grid; gap: 4px; font-size: 12px; color: var(--muted) }
+.fields input[type=text], .fields select, .fields textarea { border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 8px 10px; font-size: 14px; color: var(--ink) }
+.fields .inline { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 13px }
+#out { width: 100%; min-height: 240px; max-height: 46vh; border: 1px solid var(--line); background: var(--bg); border-radius: 10px; padding: 10px; font: 12px/1.5 var(--f-mono); color: var(--ink); resize: vertical }
+#copy-fallback { position: fixed; inset: auto 16px 16px; height: 120px; z-index: 40 }
+@media (max-width: 720px) { .tray-body { grid-template-columns: 1fr } #out { min-height: 180px } }
+@media (prefers-reduced-motion: reduce) { #tray { transition: none } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Luz Motion <small id="total">KOLEKSI ANIMASI UI</small></h1>
+    <p>Koleksi animasi UI/UX yang bisa dicoba langsung. Ketuk atau arahkan kursor ke setiap demo. Centang <b>Pilih</b> pada animasi yang Anda mau, lalu buka <b>Susun prompt</b> di bawah: tulis targetnya, pilih stack, dan salin prompt siap tempel untuk Claude. Kode tiap animasi (mis. <code>menu-hamburger-morph</code>) juga bisa langsung disebut di prompt.</p>
+  </header>
+  <div class="bar">
+    <div class="search"><input id="q" type="search" placeholder="Cari: menu, loader, toggle, sheet, stagger…" aria-label="Cari animasi"><span id="count"></span></div>
+    <div id="chips" role="toolbar" aria-label="Kategori"></div>
+  </div>
+  <main id="grid"></main>
+</div>
+
+<aside id="tray" aria-label="Penyusun prompt">
+  <div class="in">
+    <div class="tray-head">
+      <strong><span id="sel-n">0</span> dipilih</strong>
+      <div id="tray-list"></div>
+      <button id="clear" class="ghost" type="button">Kosongkan</button>
+      <button id="toggle-tray" class="ghost" type="button" aria-expanded="false" aria-controls="tray-body">Susun prompt</button>
+      <button id="copy-all" class="primary" type="button">Salin prompt</button>
+    </div>
+    <div class="tray-body" id="tray-body">
+      <div class="fields">
+        <label for="mode">Mode
+          <select id="mode"><option value="new">Tambah ke web/app baru atau fitur baru</option><option value="fix">Koreksi animasi yang sudah ada</option></select></label>
+        <label for="target">Terapkan ke (elemen / halaman)
+          <input id="target" type="text" placeholder="mis. menu navigasi di header halaman pasien"></label>
+        <label for="issue" id="issue-wrap" hidden>Masalah sekarang
+          <textarea id="issue" rows="2" placeholder="mis. dropdown muncul kaku tanpa transisi, sheet terlalu lambat"></textarea></label>
+        <label for="stack">Stack
+          <select id="stack">
+            <option value="vanilla">HTML + CSS + JS vanilla</option>
+            <option value="tailwind">React + Tailwind</option>
+            <option value="motion">React + Motion (framer-motion)</option>
+            <option value="vue">Vue 3</option>
+            <option value="apps">Google Apps Script (HtmlService)</option>
+          </select></label>
+        <label class="inline" for="withcode"><input id="withcode" type="checkbox" checked> Sertakan kode referensi</label>
+      </div>
+      <textarea id="out" readonly aria-label="Prompt hasil susunan"></textarea>
+    </div>
+  </div>
+</aside>
+<textarea id="copy-fallback" hidden aria-label="Teks untuk disalin"></textarea>
+
+<script src="core.js"></script>
+<!--DEMOS-->
