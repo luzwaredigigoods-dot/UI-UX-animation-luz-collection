@@ -110,9 +110,9 @@
     tags: 'checkbox progress ring checklist complete celebrate counter',
     html: '<div class="pr"><div class="rg"><svg viewBox="0 0 44 44" width="64" height="64"><circle cx="22" cy="22" r="18" class="bg"/><circle cx="22" cy="22" r="18" class="fg" pathLength="3"/></svg><b class="n">0<small>/3</small></b><span class="dn">' + CHECK + '</span></div>' +
       '<div class="ls">' + ['Stretch', 'Read 10 pages', 'Drink water'].map(function (s) { return '<button type="button" class="it"><span class="cb" style="width:15px;height:15px">' + CHECK + '</span>' + s + '</button>'; }).join('') + '</div></div>',
-    css: boxCss + '& .pr{display:flex;align-items:center;gap:16px}& .rg{position:relative;width:64px;height:64px;display:grid;place-items:center}& .rg svg{position:absolute;inset:0;transform:rotate(-90deg)}' +
+    css: boxCss + '& .pr{display:flex;align-items:center;gap:16px}& .rg{position:relative;width:64px;height:64px;display:grid;place-items:center}& .rg>svg{position:absolute;inset:0;transform:rotate(-90deg)}' +
       '& .bg,& .fg{fill:none;stroke-width:4}& .bg{stroke:var(--d-soft)}& .fg{stroke:var(--d-accent);stroke-linecap:round;stroke-dasharray:3;stroke-dashoffset:3;transition:stroke-dashoffset 420ms cubic-bezier(.2,.8,.2,1)}' +
-      '& .n{font-size:15px}& .n small{font-size:9px;color:var(--d-mid)}& .dn{position:absolute;inset:10px;border-radius:50%;background:linear-gradient(135deg,#6f8cff,#4f5cff);box-shadow:0 0 16px rgba(90,110,255,.6);padding:9px;box-sizing:border-box;opacity:0}& .dn .tk{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}' +
+      '& .n{font-size:15px}& .n small{font-size:9px;color:var(--d-mid)}& .dn{position:absolute;inset:10px;border-radius:50%;background:linear-gradient(135deg,#6f8cff,#4f5cff);box-shadow:0 0 16px rgba(90,110,255,.6);padding:9px;box-sizing:border-box;opacity:0}& .dn svg{display:block}& .dn .tk{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}' +
       '& .ls{display:grid;gap:4px}& .it{display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--d-fg);font:inherit;font-size:10.5px;padding:5px 0;cursor:pointer}' +
       '& .sk{position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;border-radius:50%;background:var(--d-accent);pointer-events:none}',
     js: function (root, api) {

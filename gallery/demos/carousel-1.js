@@ -127,7 +127,7 @@
     use: 'galeri hero atau kartu destinasi/fasilitas yang ingin terasa premium',
     tags: 'carousel parallax depth image layer slide speed',
     html: '<div class="px"><div class="vp"><div class="tr">' + ['mt', 'oc', 'gd', 'ct'].map(function (c, i) { return '<div class="cd"><div class="sc ' + c + ' in"></div><b>' + ['Mountains', 'Ocean', 'Garden', 'City'][i] + '</b><small>' + (i + 1) + ' of 4</small></div>'; }).join('') + '</div></div></div>',
-    css: scenes + '& .px{width:100%}& .vp{overflow:hidden;cursor:pointer}& .tr{display:flex;gap:10px;height:120px;padding-left:calc(50% - 85px)}' +
+    css: scenes + '& .px{width:100%;min-width:0;overflow:hidden}& .vp{overflow:hidden;cursor:pointer}& .tr{display:flex;gap:10px;height:120px;padding-left:calc(50% - 85px)}' +
       '& .cd{position:relative;flex:none;width:170px;border-radius:14px;overflow:hidden;color:#fff}& .cd .in{position:absolute;inset:0 -90px;border-radius:0}' +
       '& .cd b{position:absolute;left:10px;bottom:8px;font-size:11px}& .cd small{position:absolute;right:10px;bottom:9px;font-size:8.5px;opacity:.8}',
     js: function (root, api) {
