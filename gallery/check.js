@@ -13,6 +13,9 @@ const CATS = ['Menu & Navigasi', 'Tombol & Toggle', 'Input & Form', 'List & Gest
   'Modal, Sheet & Tooltip', 'Loading & Skeleton', 'Feedback & Notifikasi', 'Teks & Angka', 'Transisi Halaman', 'Prinsip Gerak', 'Latar & Efek'];
 const REQ = ['id', 'cat', 'name', 'source', 'trigger', 'motion', 'timing', 'use', 'html'];
 
+const dupCtx = { window: {} };
+vm.runInNewContext(fs.readFileSync(path.join(__dirname, 'duplikat.js'), 'utf8'), dupCtx);
+const DUP = dupCtx.window.LUZ_DUPLIKAT || {};
 const only = process.argv[2] ? [path.resolve(process.argv[2])] : null;
 const files = (only || fs.readdirSync(dir).filter(f => f.endsWith('.js')).sort().map(f => path.join(dir, f)));
 const seen = new Map();
@@ -55,14 +58,21 @@ if (!only) {
   fs.writeFileSync(idx, html);
   // catalog for the skill
   const all = [];
-  for (const f of files) { const ctx = { LUZ: { add: e => all.push(e) } }; try { vm.runInNewContext(fs.readFileSync(f, 'utf8'), ctx); } catch (e) {} }
+  for (const f of files) { const ctx = { LUZ: { add: e => { if (!DUP[e.id]) all.push(e); } } }; try { vm.runInNewContext(fs.readFileSync(f, 'utf8'), ctx); } catch (e) {} }
+  for (const [k, [keep]] of Object.entries(DUP)) {
+    if (!seen.has(k)) { errors++; console.error('✗ duplikat.js: unknown id ' + k); }
+    if (!seen.has(keep) || DUP[keep]) { errors++; console.error('✗ duplikat.js: ' + k + ' points to missing/removed ' + keep); }
+  }
+  const varian = id => Object.keys(DUP).filter(k => DUP[k][0] === id);
   const byCat = {};
   all.forEach(e => (byCat[e.cat] = byCat[e.cat] || []).push(e));
   let md = '# Katalog Luz Motion\n\n' + all.length + ' animasi. Sebut ID-nya di prompt, mis. "pakai `menu-circle-reveal` untuk menu di header".\n\n';
   for (const c of CATS) if (byCat[c]) {
     md += '## ' + c + '\n\n';
-    for (const e of byCat[c]) md += '### `' + e.id + '` — ' + e.name + '\n- Sumber: ' + e.source + '\n- Pemicu: ' + e.trigger + '\n- Gerak: ' + e.motion + '\n- Durasi & easing: ' + e.timing + '\n- Cocok untuk: ' + e.use + '\n- Kode: `gallery/demos/' + seen.get(e.id) + '`\n\n';
+    for (const e of byCat[c]) md += '### `' + e.id + '` — ' + e.name + '\n- Sumber: ' + e.source + '\n- Pemicu: ' + e.trigger + '\n- Gerak: ' + e.motion + '\n- Durasi & easing: ' + e.timing + '\n- Cocok untuk: ' + e.use + (varian(e.id).length ? '\n- Juga mewakili: ' + varian(e.id).map(k => '`' + k + '` (' + DUP[k][1] + ')').join('; ') : '') + '\n- Kode: `gallery/demos/' + seen.get(e.id) + '`\n\n';
   }
+  md += '## ID lama yang digabung\n\nID berikut gerak intinya sama dengan animasi lain, jadi tidak ditampilkan terpisah. Bila prompt menyebut ID kiri, pakai ID kanan (sesuaikan warna/konteksnya).\n\n| ID lama | Pakai | Catatan |\n|---|---|---|\n';
+  for (const [k, [keep, why]] of Object.entries(DUP)) md += '| `' + k + '` | `' + keep + '` | ' + why + ' |\n';
   fs.writeFileSync(path.join(__dirname, '..', 'skill', 'luz-motion', 'references', 'katalog.md'), md);
   console.log('index.html + skill katalog rebuilt: ' + all.length + ' animations in ' + files.length + ' files');
 }

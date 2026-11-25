@@ -3,14 +3,18 @@
 (function () {
   'use strict';
   var entries = [];
+  var DUP = window.LUZ_DUPLIKAT || {};
+  function varianDari(id) { return Object.keys(DUP).filter(function (k) { return DUP[k][0] === id; }); }
   var byId = {};
   var LUZ = (window.LUZ = {
     add: function (e) {
+      if (DUP[e.id]) return; // same core motion as another entry; see duplikat.js
       if (byId[e.id]) { console.warn('duplicate id', e.id); return; }
       byId[e.id] = e; entries.push(e);
     },
     all: function () { return entries.slice(); },
-    get: function (id) { return byId[id]; }
+    get: function (id) { return byId[id] || (DUP[id] && byId[DUP[id][0]]); },
+    duplikat: DUP
   });
 
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -69,6 +73,8 @@
     lines.push('   Gerak: ' + e.motion);
     lines.push('   Durasi & easing: ' + e.timing);
     if (e.use) lines.push('   Cocok untuk: ' + e.use);
+    var v = varianDari(e.id);
+    if (v.length) lines.push('   Juga mewakili: ' + v.map(function (k) { return k + ' (' + DUP[k][1] + ')'; }).join('; '));
     if (withCode) lines.push('   Referensi kode (vanilla, sesuaikan ke stack):\n```\n' + codeFor(e) + '\n```');
     return lines.join('\n');
   }
@@ -82,7 +88,7 @@
   };
 
   function buildPrompt(ids, opts) {
-    var list = ids.map(function (id) { return byId[id]; }).filter(Boolean);
+    var list = ids.map(function (id) { return LUZ.get(id); }).filter(Boolean);
     var p = [];
     var mode = opts.mode === 'fix'
       ? 'Perbaiki animasi yang SUDAH ADA di proyek ini memakai pola dari Luz Motion berikut. Cari komponennya dulu, jangan buat ulang dari nol, ubah sesedikit mungkin.'
@@ -152,7 +158,8 @@
         '<div class="g-row1"><code class="g-id">' + esc(e.id) + '</code><span class="g-trig">' + esc(e.trigger) + '</span></div>' +
         '<h3>' + esc(e.name) + '</h3>' +
         '<p class="g-motion">' + esc(e.motion) + '</p>' +
-        '<p class="g-timing">' + esc(e.timing) + '</p>';
+        '<p class="g-timing">' + esc(e.timing) + '</p>' +
+        (varianDari(e.id).length ? '<p class="g-var">Juga mewakili ' + varianDari(e.id).length + ' varian: ' + esc(varianDari(e.id).join(', ')) + '</p>' : '');
       var actions = el('div', { class: 'g-actions' });
       var pick = el('label', { class: 'g-pick' });
       var cb = el('input', { type: 'checkbox', id: 'pick-' + e.id });
@@ -179,7 +186,7 @@
       var term = (q.value || '').toLowerCase().trim();
       var shown = 0;
       entries.forEach(function (e) {
-        var hay = (e.id + ' ' + e.name + ' ' + e.cat + ' ' + e.motion + ' ' + (e.use || '') + ' ' + (e.tags || '')).toLowerCase();
+        var hay = (e.id + ' ' + e.name + ' ' + e.cat + ' ' + e.motion + ' ' + (e.use || '') + ' ' + (e.tags || '') + ' ' + varianDari(e.id).join(' ')).toLowerCase();
         var ok = (activeCat === 'Semua' || e.cat === activeCat) && (!term || hay.indexOf(term) >= 0);
         document.getElementById('c-' + e.id).hidden = !ok;
         if (ok) shown++;
@@ -236,6 +243,18 @@
       selected.slice().forEach(function (id) { var cb = document.getElementById('pick-' + id); cb.checked = false; cb.dispatchEvent(new Event('change')); });
     });
     tray();
+
+    function lompat() {
+      var h = decodeURIComponent((location.hash || '').replace(/^#c-/, ''));
+      var e = h && LUZ.get(h);
+      if (!e) return;
+      activeCat = 'Semua'; q.value = ''; filter();
+      var c = document.getElementById('c-' + e.id);
+      c.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+      c.classList.add('g-flash'); setTimeout(function () { c.classList.remove('g-flash'); }, 1600);
+    }
+    window.addEventListener('hashchange', lompat);
+    lompat();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else setTimeout(init, 0);

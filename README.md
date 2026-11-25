@@ -1,6 +1,6 @@
 # Luz Motion
 
-A collection of 226 UI/UX animations, learned from 41 screen recordings of animation references (the Drive folder "ui/ux animation"). Each animation:
+A collection of 198 unique UI/UX animations (226 cells, with 28 near-identical ones merged; see `gallery/duplikat.js`), learned from 41 screen recordings of animation references (the Drive folder "ui/ux animation"). Each animation:
 
 - has a fixed ID (e.g. `menu-circle-reveal`, `toast-depth-focus`)
 - is rebuilt as an interactive live demo (HTML + CSS + JS vanilla, no libraries)

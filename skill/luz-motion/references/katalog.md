@@ -1,6 +1,6 @@
 # Katalog Luz Motion
 
-226 animasi. Sebut ID-nya di prompt, mis. "pakai `menu-circle-reveal` untuk menu di header".
+198 animasi. Sebut ID-nya di prompt, mis. "pakai `menu-circle-reveal` untuk menu di header".
 
 ## Menu & Navigasi
 
@@ -34,14 +34,7 @@
 - Gerak: Baris-baris dropdown (Design, Motion, Code, Sound) terlipat terbuka satu per satu seperti kertas: tiap baris berputar dari rotateX(−90°) ke 0 dengan engsel di tepi atas, stagger 70ms, sementara wadah daftar membuka dari atas ke bawah (clip-path) seolah mendorong baris berikutnya. Chevron berputar 180°. Tutup: baris terlipat kembali dari bawah ke atas.
 - Durasi & easing: tiap baris 300ms ease-out, stagger 70ms (total ≈510ms) · tutup stagger 50ms terbalik · chevron 300ms
 - Cocok untuk: Dropdown filter atau kategori, misalnya pilih poli, kategori obat, atau jenis laporan.
-- Kode: `gallery/demos/menu-2.js`
-
-### `menu2-button-to-panel` — Button to Panel
-- Sumber: Menu · Part 2
-- Pemicu: tap
-- Gerak: Tombol pil "+ New" (76×32px) di pojok kanan-bawah tumbuh menjadi panel 200×150px: clip-path membuka dari pojok itu ke seluruh panel, warna aksen tombol memudar menjadi permukaan panel. Judul "Create" dan pilihan Note, Photo, Event muncul naik 6px berurutan. X menyusutkan panel kembali menjadi tombol.
-- Durasi & easing: tumbuh 420ms cubic-bezier(.3,1.15,.4,1) (overshoot kecil) · isi 200ms delay 180/230/280ms · susut 350ms
-- Cocok untuk: Tombol buat-baru yang membuka pilihan jenis, misalnya buat catatan, unggah foto pemeriksaan, atau jadwal kontrol.
+- Juga mewakili: `search-paper-unfold` (baris membuka rotateX -90° beruntun)
 - Kode: `gallery/demos/menu-2.js`
 
 ### `menu2-command-palette` — Command Palette
@@ -92,14 +85,6 @@
 - Cocok untuk: Menu bertema dokumen/arsip, misalnya pilihan format laporan atau riwayat kunjungan.
 - Kode: `gallery/demos/menu-5.js`
 
-### `menu5-line-expand` — Line Expand
-- Sumber: Menu · Part 5
-- Pemicu: tap
-- Gerak: Garis tipis bercahaya melesat keluar dari tombol ke kanan melintasi posisi menu (scaleX 0 → 1, origin kiri), lalu garis itu membuka secara vertikal menjadi panel menu (clip-path inset terbuka ke atas dan ke bawah dari tinggi garis). Saat item dipilih, menu kembali memipih menjadi garis yang lalu ditarik masuk ke tombol.
-- Durasi & easing: garis 120ms ease-out · buka 220ms ease-out (mulai 100ms) · tutup 180ms + garis 120ms
-- Cocok untuk: Dropdown yang jelas terhubung ke tombol pemicunya, misalnya pilihan tampilan atau filter di toolbar.
-- Kode: `gallery/demos/menu-5.js`
-
 ### `menu-hamburger-morph` — Hamburger Morph
 - Sumber: Menu · Part 6
 - Pemicu: tap
@@ -138,15 +123,8 @@
 - Gerak: Lapisan menu penuh terbuka lewat lingkaran yang membesar dari pusat tombol (clip-path circle 0→300px); tepi lingkaran tampak sebagai busur garis tipis yang menyapu ke kiri. Isinya daftar besar bertipe tipis HOME/EXPLORE/LIBRARY, item aktif bergaris bawah. Memilih item menyusutkan lingkaran kembali ke tombol.
 - Durasi & easing: 500ms · ease-in-out (cubic-bezier .65,0,.35,1), tutup dengan kurva sama
 - Cocok untuk: Menu layar penuh untuk situs portofolio/landing atau aplikasi dengan sedikit tujuan utama.
+- Juga mewakili: `search-circle-reveal` (lingkaran clip-path dari tombol, dipakai di search bar); `toast-circle-reveal` (lingkaran clip-path dari tombol, dipakai di toast)
 - Kode: `gallery/demos/menu-6.js`
-
-### `pagination-elastic-glide` — Elastic Glide
-- Sumber: Pagination · Part 1
-- Pemicu: tap
-- Gerak: Sorotan nomor meregang menjadi pil panjang dari nomor lama ke nomor baru, lalu menyusut di nomor baru. Kartu lama bergeser keluar searah perpindahan (40px + memudar) dan kartu baru meluncur masuk dari sisi berlawanan, bergiliran 50ms.
-- Durasi & easing: sorotan 380ms ease-in-out (regang di 45%) · kartu 350ms ease-out stagger 50ms
-- Cocok untuk: Paginasi daftar/kartu, misalnya halaman hasil pencarian pasien atau galeri.
-- Kode: `gallery/demos/pagination-1.js`
 
 ### `pagination-arc-hop` — Arc Hop
 - Sumber: Pagination · Part 1
@@ -172,14 +150,6 @@
 - Cocok untuk: Pergantian halaman/tab konten yang ingin terasa “membuka”, misalnya kategori produk.
 - Kode: `gallery/demos/pagination-1.js`
 
-### `pagination-comet-trail` — Comet Trail
-- Sumber: Pagination · Part 1
-- Pemicu: tap
-- Gerak: Sorotan melesat ke nomor baru sambil meninggalkan jejak empat bayangan yang tertinggal 25ms satu sama lain dan memudar. Kartu lama meredup; kartu baru memperbesar diri dari scale 0.85 dengan blur 4px menjadi tajam.
-- Durasi & easing: lesat 300ms ease-in-out · jejak 4× jeda 25ms · kartu 350ms ease-out
-- Cocok untuk: Paginasi dengan lompatan jauh (1 → 5) agar arah perpindahan tetap terbaca.
-- Kode: `gallery/demos/pagination-1.js`
-
 ### `pagination-page-turn` — Page Turn
 - Sumber: Pagination · Part 1
 - Pemicu: tap
@@ -194,6 +164,7 @@
 - Gerak: Pil aksen (46×34px) di belakang ikon aktif meluncur ke tab yang diketuk. Di tengah jalan pil meregang (scaleX hingga ±1.9 untuk lompatan 1 tab, lebih panjang untuk lompatan jauh) sehingga menutupi dua ikon sekaligus, lalu menyusut kembali dengan overshoot 4px seperti pegas. Ikon di dalam pil berganti warna ke warna permukaan.
 - Durasi & easing: ≈480ms cubic-bezier(.3,.7,.4,1) · regangan puncak di 45% · overshoot 4px di 80% · warna ikon 200ms
 - Cocok untuk: Bottom navigation aplikasi mobile, misalnya pindah Beranda ↔ Jadwal ↔ Pasien ↔ Profil.
+- Juga mewakili: `pagination-elastic-glide` (penanda aktif merentang ke tujuan lalu menyusut); `segment-outline-glide` (penanda aktif merentang ke tujuan; versi garis tepi saja)
 - Kode: `gallery/demos/tab-bar-18.js`
 
 ### `tabbar18-liquid-bulge` — Liquid Bulge
@@ -308,6 +279,7 @@
 - Gerak: Ketuk: kotak terangkat (scale 1.12 dengan bayangan), berputar 180° pada sumbu Y dengan perspektif 300px, dan sisi belakangnya berupa kotak biru bergradasi berisi ✓ putih; lalu turun kembali ke scale 1. Subjudul berganti "Off" → "On · back in stock". Ketuk lagi untuk membalik kembali.
 - Durasi & easing: ≈460ms cubic-bezier(.4,0,.2,1) · angkat 0–30%, putar 15–85%, turun 70–100%
 - Cocok untuk: toggle langganan/pengingat (mis. "ingatkan saat stok obat tersedia")
+- Juga mewakili: `badge-coin-flip` (balik 3D rotateY ke sisi belakang, dipakai di badge)
 - Kode: `gallery/demos/checkbox-2.js`
 
 ### `checkbox-progress-ring` — Progress Ring
@@ -332,6 +304,7 @@
 - Gerak: Ketuk: kotak kosong tertekan (scale 0.85), lalu pop ke 1.15 sambil terisi biru dan ✓ tergambar; bersamaan sebuah cincin mengembang (scale 1 → 1.8, memudar) dan 8 titik warna-warni terlempar radial 24px lalu hilang. Kotak kembali ke 1 dan subjudul berganti "Early access" → "You're in!". Ketuk lagi: kotak kosong tanpa efek.
 - Durasi & easing: tekan 100ms · pop 260ms cubic-bezier(.34,1.8,.64,1) · cincin & titik 500ms ease-out
 - Cocok untuk: persetujuan atau pendaftaran penting yang pantas dirayakan (mis. ikut program, setuju consent)
+- Juga mewakili: `inerr-alert-pop` (ikon meletup dengan percikan; warna merah untuk error)
 - Kode: `gallery/demos/checkbox-2.js`
 
 ### `iconmorph1-stroke-morph` — Stroke Morph
@@ -348,6 +321,7 @@
 - Gerak: Ikon lama berputar −180° sambil mengecil ke 0.3 dan memudar; ikon baru masuk berputar dari 180° ke 0° dan membesar dari 0.3 ke 1 dengan pegas, mulai 100ms setelah ikon lama.
 - Durasi & easing: keluar 300ms ease-in · masuk 350ms cubic-bezier(.3,1.4,.5,1) delay 100ms
 - Cocok untuk: Ganti ikon status yang ingin terasa hidup, misalnya tombol putar/jeda atau simpan ke favorit.
+- Juga mewakili: `stepper-glyph-spin` (ikon berputar 180° sambil berganti)
 - Kode: `gallery/demos/icon-morph-1.js`
 
 ### `iconmorph1-pen-redraw` — Pen Redraw
@@ -366,14 +340,6 @@
 - Cocok untuk: Toggle yang playful atau bertema cairan, misalnya pengingat minum, mode tidur, atau tombol di aplikasi anak.
 - Kode: `gallery/demos/icon-morph-1.js`
 
-### `iconmorph1-tumble-flip` — Tumble Flip
-- Sumber: Icon Morph · Part 1
-- Pemicu: tap
-- Gerak: Seluruh tombol berguling dari atas ke bawah (rotateX 0→90° dengan perspective 300px), berganti keadaan saat tegak lurus (ikon, warna, label), lalu berlanjut dari −90° ke 0° sehingga sisi baliknya yang tampak.
-- Durasi & easing: 500ms ease-in-out · pergantian keadaan tepat di 250ms
-- Cocok untuk: Toggle yang ingin terasa seperti kartu dua sisi, misalnya ikuti/berhenti ikuti atau tandai selesai.
-- Kode: `gallery/demos/icon-morph-1.js`
-
 ### `iconmorph1-slice-shift` — Slice Shift
 - Sumber: Icon Morph · Part 1
 - Pemicu: tap
@@ -381,14 +347,6 @@
 - Durasi & easing: keluar 260ms ease-in, stagger 40ms · masuk 300ms ease-out mulai 140ms, stagger 40ms
 - Cocok untuk: Ganti ikon bergaya digital/glitch, misalnya mode privasi, enkripsi, atau aplikasi bertema teknologi.
 - Kode: `gallery/demos/icon-morph-1.js`
-
-### `segment-outline-glide` — Outline Glide
-- Sumber: Segmented Control · Part 2
-- Pemicu: tap
-- Gerak: Tidak ada isian, hanya outline pill bergradasi aksen (1.5px + glow) yang meluncur ke segmen terpilih. Di tengah perjalanan outline meregang scaleX 1.25 lalu mendarat dengan overshoot kecil; label terpilih menjadi terang.
-- Durasi & easing: ≈320ms cubic-bezier(.34,1.56,.64,1) · regangan di 50% perjalanan
-- Cocok untuk: filter ringan atau pemilih ukuran yang tidak ingin terlalu berat secara visual
-- Kode: `gallery/demos/segmented-2.js`
 
 ### `segment-vertical-stack` — Vertical Stack
 - Sumber: Segmented Control · Part 2
@@ -462,14 +420,6 @@
 - Cocok untuk: Stepper di aplikasi yang bernuansa ramah/playful, misalnya jumlah gelas air harian.
 - Kode: `gallery/demos/stepper-1.js`
 
-### `stepper-glyph-spin` — Glyph Spin
-- Sumber: Stepper · Part 1
-- Pemicu: tap
-- Gerak: Ikon + atau − pada tombol berputar setengah putaran (180°; tanda + tampak seperti × di tengah putaran). Angka membalik di sumbu horizontal: rotateX 0→90° (hilang), nilai berganti, lalu −90°→0.
-- Durasi & easing: ikon 350ms ease-in-out · balik angka 175ms ease-in + 175ms ease-out
-- Cocok untuk: Stepper di form pemesanan atau pengaturan jumlah yang ingin terasa mekanis.
-- Kode: `gallery/demos/stepper-1.js`
-
 ### `stepper-halo-burst` — Halo Burst
 - Sumber: Stepper · Part 1
 - Pemicu: tap
@@ -484,6 +434,7 @@
 - Gerak: Knob melesat ke sisi lain dan meninggalkan 3 bayangan (afterimage) knob di sepanjang lintasan dengan opacity 0.5/0.35/0.2 yang tertinggal 35ms satu sama lain lalu memudar. Warna track berganti bersamaan.
 - Durasi & easing: knob 250ms cubic-bezier(.2,.8,.2,1) · bayangan +35ms bertahap, pudar ≈200ms · warna 250ms
 - Cocok untuk: Toggle pengaturan yang ingin terasa cepat dan bertenaga, misalnya mode fokus atau notifikasi.
+- Juga mewakili: `pagination-comet-trail` (bayangan sisa (afterimage) di sepanjang lintasan)
 - Kode: `gallery/demos/switch-3.js`
 
 ### `switch-pixel-teleport` — Pixel Teleport
@@ -536,14 +487,6 @@
 - Cocok untuk: Pemilih tanggal janji temu atau jadwal kontrol pasien.
 - Kode: `gallery/demos/date-picker-1.js`
 
-### `datepick-snap-brackets` — Snap Brackets
-- Sumber: Date Picker · Part 1
-- Pemicu: tap
-- Gerak: Empat sudut siku terbang dari hari lama ke hari yang diketuk, terbuka lebar (bingkai 1.5× lebih besar), lalu menjepit rapat di sekeliling kapsul baru dengan pegas; kapsul terisi dan siku memudar.
-- Durasi & easing: terbang 250ms ease-out · jepit 250ms pegas (cubic-bezier .34,1.56,.64,1) · pudar 200ms
-- Cocok untuk: Pilih tanggal/slot yang ingin terasa “terkunci” dengan presisi, misalnya jadwal operasi.
-- Kode: `gallery/demos/date-picker-1.js`
-
 ### `datepick-rise-land` — Rise & Land
 - Sumber: Date Picker · Part 1
 - Pemicu: tap
@@ -584,14 +527,6 @@
 - Cocok untuk: Validasi field email/NIK/nomor HP saat tombol kirim ditekan.
 - Kode: `gallery/demos/input-error-3.js`
 
-### `inerr-alert-pop` — Alert Pop
-- Sumber: Input Error · Part 3
-- Pemicu: tap
-- Gerak: Lingkaran merah berisi “!” meloncat keluar di ujung kanan field dengan pegas (scale 0→1.25→1), sekaligus 8 garis percikan memancar ke segala arah lalu memudar. Border merah dan pesan galat ikut muncul.
-- Durasi & easing: ikon 350ms pegas (cubic-bezier .34,1.56,.64,1) · percikan 300ms ease-out
-- Cocok untuk: Galat validasi yang perlu menarik perhatian, misalnya field wajib di form pendaftaran pasien.
-- Kode: `gallery/demos/input-error-3.js`
-
 ### `inerr-message-drop` — Message Drop
 - Sumber: Input Error · Part 3
 - Pemicu: tap
@@ -606,6 +541,7 @@
 - Gerak: Border field berkedip merah bercahaya dua kali; setiap kedipan melepaskan garis gema (outline) yang mengembang keluar (scale 1→1.05×1.35) sambil memudar.
 - Durasi & easing: dua kedip @150ms (total 600ms) · gema 450ms ease-out, jeda 300ms
 - Cocok untuk: Galat yang muncul berulang atau field kritis, misalnya kata sandi salah saat login.
+- Juga mewakili: `copy-outline-echo` (garis tepi beriak keluar; warna hijau untuk sukses, merah untuk error)
 - Kode: `gallery/demos/input-error-3.js`
 
 ### `inerr-letter-jitter` — Letter Jitter
@@ -614,6 +550,7 @@
 - Gerak: Setiap huruf melompat (translateY −5px) dan bergetar miring (±6°) sambil memerah, bergiliran dari kiri ke kanan seperti gelombang, lalu kembali ke posisi dan warnanya semula.
 - Durasi & easing: tiap huruf 350ms · stagger 30ms · total ±600ms
 - Cocok untuk: Galat format teks (email, kode promo) di form yang ingin terasa hidup.
+- Juga mewakili: `copy-char-wave` (huruf meloncat beruntun dan berganti warna)
 - Kode: `gallery/demos/input-error-3.js`
 
 ### `inerr-tilt-wobble` — Tilt Wobble
@@ -632,14 +569,6 @@
 - Cocok untuk: Indikator kekuatan kata sandi di form daftar/ganti sandi.
 - Kode: `gallery/demos/password-strength-1.js`
 
-### `pwstr-block-drop` — Block Drop
-- Sumber: Password Strength · Part 1
-- Pemicu: ketik
-- Gerak: Setiap segmen baru jatuh dari arah field (translateY −22px→0) lalu mendarat dengan efek gepeng (scale 1.15×0.6 → 1), bergiliran 80ms. Saat kata sandi dihapus, segmen terjatuh miring (±12°) dan memudar.
-- Durasi & easing: jatuh 350ms · gepeng di 60–75% · stagger 80ms · jatuh-hapus 350ms ease-in
-- Cocok untuk: Meter kekuatan sandi atau progres bertingkat yang ingin terasa fisik/playful.
-- Kode: `gallery/demos/password-strength-1.js`
-
 ### `pwstr-spark-feed` — Spark Feed
 - Sumber: Password Strength · Part 1
 - Pemicu: ketik
@@ -654,14 +583,6 @@
 - Gerak: Setiap kali level berubah, semua segmen terisi menyala ulang satu per satu dari kiri ke kanan seperti rantai lampu: tiap segmen berkilat putih terang (brightness 2.2 + glow) lalu turun ke warna kekuatannya.
 - Durasi & easing: tiap segmen 260ms ease-out · stagger 70ms
 - Cocok untuk: Meter kekuatan sandi, atau indikator langkah yang ingin menegaskan perubahan level.
-- Kode: `gallery/demos/password-strength-1.js`
-
-### `pwstr-flap-label` — Flap Label
-- Sumber: Password Strength · Part 1
-- Pemicu: ketik
-- Gerak: Kata kekuatan (Weak/Fair/Good/Strong) ada di ubin kecil bergaris tengah dan berganti dengan membalik seperti papan split-flap (rotateX 0→90°, teks berganti, −90°→0). Segmen baru “terbuka” dari tepi atas (scaleY 0→1) bergiliran.
-- Durasi & easing: flap 150ms ease-in + 150ms ease-out · segmen 220ms stagger 60ms
-- Cocok untuk: Label status yang berganti, misalnya kekuatan sandi atau status antrean.
 - Kode: `gallery/demos/password-strength-1.js`
 
 ### `pwstr-liquid-link` — Liquid Link
@@ -696,14 +617,6 @@
 - Cocok untuk: skala nyeri, suasana hati, atau kepuasan pasien yang diisi dengan menggeser
 - Kode: `gallery/demos/rating-2.js`
 
-### `rating-score-fly` — Score Fly
-- Sumber: Rating · Part 2
-- Pemicu: tap
-- Gerak: Ketuk bintang ke-5: kelima bintang terisi cepat (jeda 40ms), lalu salinan bintang kecil terbang di busur dari bintang ke-5 ke bintang di header sambil mengecil (scale 1 → 0.5). Saat tiba, bintang header berdenyut dan angka rata-rata bergulir 4.2 → 4.3 serta jumlah ulasan 128 → 129.
-- Durasi & easing: isi 40ms stagger · terbang ≈480ms cubic-bezier(.5,0,.3,1) · gulir angka 300ms
-- Cocok untuk: ulasan produk/layanan yang langsung memperbarui rata-rata rating di header
-- Kode: `gallery/demos/rating-2.js`
-
 ### `rating-rating-tags` — Rating Tags
 - Sumber: Rating · Part 2
 - Pemicu: tap
@@ -720,46 +633,6 @@
 - Cocok untuk: pemilih skor atau angka (skala nyeri 1–10, jumlah dosis) dengan gestur roda
 - Kode: `gallery/demos/rating-2.js`
 
-### `search-circle-reveal` — Circle Reveal
-- Sumber: Search · Part 3
-- Pemicu: tap
-- Gerak: Bar pencarian dibuka oleh lingkaran clip-path yang tumbuh dari tombol cari di ujung kanan sampai menutupi bar. Daftar saran dibuka lingkaran kedua dari titik ketuk di kanan atas daftar. Saat ditutup, lingkaran menyusut kembali ke tombol X.
-- Durasi & easing: bar 220ms ease-out · daftar 240ms (jeda 80ms) · tutup 180ms ease-in
-- Cocok untuk: Kolom cari di header aplikasi yang tersembunyi di balik ikon kaca pembesar.
-- Kode: `gallery/demos/search-3.js`
-
-### `search-paper-unfold` — Paper Unfold
-- Sumber: Search · Part 3
-- Pemicu: tap
-- Gerak: Bar terbuka seperti kertas dilipat: berputar rotateY dari 90° ke 0 dengan engsel di tepi kanan (dekat tombol). Baris saran terbuka satu per satu dari atas, masing-masing rotateX −90° → 0 dengan engsel di tepi atas. Saat ditutup, baris terlipat dari bawah ke atas lalu bar terlipat ke kanan.
-- Durasi & easing: bar 300ms ease-out · baris 220ms, stagger 70ms · tutup kebalikan, 160ms per baris
-- Cocok untuk: Pencarian bergaya editorial/majalah, atau menu saran yang ingin terasa "dibuka".
-- Kode: `gallery/demos/search-3.js`
-
-### `search-jelly-pop` — Jelly Pop
-- Sumber: Search · Part 3
-- Pemicu: tap
-- Gerak: Bar muncul dari scale 0.8 dengan goyangan jeli: scaleX dan scaleY bergantian (1.06/0.94 → 0.97/1.03 → 1). Panel daftar lalu tiap saran pop ke 1.08 dan bergoyang turun ke 1, berurutan dari atas. Saat ditutup, bar tergencet (scaleY turun, scaleX naik) lalu mengecil ke tombol.
-- Durasi & easing: bar 420ms spring lembut · baris 360ms, stagger 60ms · tutup 200ms ease-in
-- Cocok untuk: Aplikasi yang bernuansa ramah/main-main, misalnya pencarian di aplikasi edukasi pasien anak.
-- Kode: `gallery/demos/search-3.js`
-
-### `search-border-trace` — Border Trace
-- Sumber: Search · Part 3
-- Pemicu: tap
-- Gerak: Garis biru bercahaya menelusuri keliling bar (stroke-dashoffset 100 → 0), lalu teks bar tersapu masuk dari kiri ke kanan (clip-path inset). Daftar saran ditelusuri garis yang sama, lalu kata-katanya tersapu masuk. Saat ditutup, isi memudar dan garis ditarik kembali.
-- Durasi & easing: garis 250ms ease-in-out · sapuan teks 160ms · daftar mulai 150ms kemudian · tutup 200ms
-- Cocok untuk: Kolom cari di dashboard gelap/teknis yang butuh sorotan fokus yang jelas.
-- Kode: `gallery/demos/search-3.js`
-
-### `search-blur-focus` — Blur Focus
-- Sumber: Search · Part 3
-- Pemicu: tap
-- Gerak: Semua yang masuk datang dari blur(8px) dan opacity 0 lalu tajam: judul memudar kabur, bar menajam, lalu daftar menajam. Saat memilih, baris lain kabur duluan, baris terpilih tetap tajam sebentar, lalu daftar dan bar kabur keluar dan judul "Explore" menajam kembali.
-- Durasi & easing: masuk 220ms ease-out · daftar jeda 100ms · keluar 180ms ease-in
-- Cocok untuk: Transisi lembut untuk kolom cari di aplikasi bernuansa tenang/premium.
-- Kode: `gallery/demos/search-3.js`
-
 ### `search-spotlight-dim` — Spotlight Dim
 - Sumber: Search · Part 3
 - Pemicu: tap
@@ -774,6 +647,7 @@
 - Gerak: Di setiap ketukan (fokus dan kirim), empat siku sudut berbentuk L terbang masuk dari 8px di luar tiap sudut lalu "mengunci" pas di sudut kolom dengan sedikit overshoot. Siku bercahaya sebentar lalu memudar ke border.
 - Durasi & easing: masuk 220ms cubic-bezier(.3,1.5,.5,1) · tahan 300ms · pudar 250ms
 - Cocok untuk: Menandai fokus/konfirmasi di kolom penting, misalnya input NIK atau nomor rekam medis.
+- Juga mewakili: `datepick-snap-brackets` (empat siku sudut terbang lalu mengunci)
 - Kode: `gallery/demos/text-field-3.js`
 
 ### `field3-rubber-border` — Rubber Border
@@ -806,6 +680,7 @@
 - Gerak: Saat verifikasi, seluruh kolom berbalik pada sumbu horizontal (rotateX 0 → 90°, tepat di tengah terlihat tipis seperti garis) dan muncul sisi belakangnya yang mint "terverifikasi". Mengetuk kolom yang sudah terverifikasi membaliknya lagi ke sisi biru yang kosong untuk mengetik ulang.
 - Durasi & easing: setengah pertama 130ms ease-in · setengah kedua 140ms ease-out · total ≈270ms
 - Cocok untuk: Konfirmasi status yang tegas, misalnya kolom email/telepon yang sudah diverifikasi OTP.
+- Juga mewakili: `iconmorph1-tumble-flip` (balik 3D rotateX menukar keadaan, dipakai di tombol ikon)
 - Kode: `gallery/demos/text-field-3.js`
 
 ### `field3-scan-sweep` — Scan Sweep
@@ -986,14 +861,6 @@
 - Cocok untuk: Hapus item dengan nuansa tegas, misalnya membatalkan janji atau tugas.
 - Kode: `gallery/demos/swipe-delete-3.js`
 
-### `swipedel-dust-crumble` — Dust Crumble
-- Sumber: Swipe to Delete · Part 3
-- Pemicu: drag
-- Gerak: Setelah dilepas, baris hancur menjadi pasir dari kanan ke kiri: topeng clip-path menghapus baris (inset kanan 0→100%) dan tepat di garis hapus muncul ±40 partikel kecil yang terbang ke kanan-atas (20–45px) sambil memudar.
-- Durasi & easing: hapus 600ms linear · partikel 500ms ease-out, jeda sesuai posisi x · naik 300ms
-- Cocok untuk: Hapus permanen yang ingin terasa “benar-benar hilang”, misalnya kosongkan arsip atau hapus draf.
-- Kode: `gallery/demos/swipe-delete-3.js`
-
 ### `swipedel-elastic-snap` — Elastic Snap
 - Sumber: Swipe to Delete · Part 3
 - Pemicu: drag
@@ -1008,6 +875,7 @@
 - Gerak: Lingkaran merah kecil berikon sampah muncul di kiri baris (scale 0→1). Baris lalu tersedot ke dalamnya seperti efek genie: bentuknya menyempit menjadi trapesium (clip-path polygon) sambil mengecil ke arah kiri (scale 1→0.04) dan memudar, lalu ikon sampah ikut hilang.
 - Durasi & easing: ikon muncul 150ms · sedot 400ms ease-in · ikon hilang 150ms · naik 300ms
 - Cocok untuk: Pindahkan item ke tempat sampah/arsip dengan jejak visual ke mana item pergi.
+- Juga mewakili: `send-genie-outbox` (efek genie tersedot ke ikon, dipakai saat kirim surel)
 - Kode: `gallery/demos/swipe-delete-3.js`
 
 ## Kartu & Konten
@@ -1188,6 +1056,7 @@
 - Gerak: Sebuah garis aksen bercahaya 2px melebar dari tengah (scaleX 0→1), lalu dialog terbuka vertikal dari garis itu (clip-path inset 50%→0) sementara garisnya memudar. Penutupan memutar urutan: dialog menyempit jadi garis, garis mengecil hilang.
 - Durasi & easing: garis ≈160ms · buka ≈240ms ease-out (total ≈400ms) · tutup ≈300ms ease-in
 - Cocok untuk: konfirmasi hapus data (mis. hapus berkas hasil lab atau jadwal pasien)
+- Juga mewakili: `menu5-line-expand` (garis memanjang lalu membuka jadi panel, dipakai di dropdown); `tooltip-fold-open` (garis memanjang lalu membuka jadi panel, dipakai di tooltip)
 - Kode: `gallery/demos/dialog-1.js`
 
 ### `dialog-soft-focus` — Soft Focus
@@ -1196,6 +1065,7 @@
 - Gerak: Dialog datang dari blur 12px, scale 1.06 dan opacity 0 menjadi tajam, sementara aplikasi di belakangnya ikut blur 3px dan meredup. Saat ditutup dialog kembali kabur lalu hilang dan latar menajam lagi.
 - Durasi & easing: masuk ≈320ms ease-out · keluar ≈220ms ease-in · blur latar transisi 300ms
 - Cocok untuk: konfirmasi hapus data (mis. hapus berkas hasil lab atau jadwal pasien)
+- Juga mewakili: `search-blur-focus` (masuk dari blur ke tajam, dipakai di search bar)
 - Kode: `gallery/demos/dialog-1.js`
 
 ### `dialog-wobble-in` — Wobble In
@@ -1204,6 +1074,7 @@
 - Gerak: Dialog tumbuh dari scale 0.3 dengan goyangan jeli: scale (1.08, 0.92) → (0.95, 1.05) → (1.02, 0.98) → 1. Saat ditutup ia gepeng (scaleY 0.6 lalu 0, scaleX 1.2) dan menghilang.
 - Durasi & easing: masuk ≈560ms bouncy · keluar ≈240ms ease-in
 - Cocok untuk: konfirmasi hapus data (mis. hapus berkas hasil lab atau jadwal pasien)
+- Juga mewakili: `search-jelly-pop` (muncul membesar dengan goyang jelly)
 - Kode: `gallery/demos/dialog-1.js`
 
 ### `menu-bottom-sheet` — Bottom Sheet
@@ -1244,14 +1115,7 @@
 - Gerak: Gelembung baru jatuh dari 20px di atas dalam keadaan memanjang (scale 0.9×1.15) dan blur, lalu gepeng saat mendarat (scale 1.12×0.8) dan memantul kembali ke 1. Gelembung lama turun sedikit sambil memudar.
 - Durasi & easing: masuk 380ms elastis (squash & stretch) · keluar 150ms
 - Cocok untuk: Tooltip atau badge yang ingin terasa playful, misalnya hint onboarding atau notifikasi poin.
-- Kode: `gallery/demos/tooltip-1.js`
-
-### `tooltip-fold-open` — Fold Open
-- Sumber: Tooltip · Part 1
-- Pemicu: tap
-- Gerak: Gelembung lama melipat jadi garis tipis lalu hilang. Gelembung baru muncul sebagai garis 2px yang melebar dari tengah (scaleX 0 → 1), lalu terbuka ke bawah (scaleY dari garis ke 1, origin atas); teks muncul terakhir.
-- Durasi & easing: garis melebar 100ms · buka ke bawah 100ms · teks fade 100ms · keluar 150ms
-- Cocok untuk: Popover atau tooltip dengan kesan rapi/teknis, misalnya keterangan nilai lab di grafik.
+- Juga mewakili: `pwstr-block-drop` (jatuh lalu memipih saat mendarat)
 - Kode: `gallery/demos/tooltip-1.js`
 
 ### `tooltip-ink-bloom` — Ink Bloom
@@ -1302,14 +1166,6 @@
 - Gerak: Kepala bercahaya putih (radial glow 22px, lebih besar dari tinggi bar) melesat di ujung isian ke nilai baru sambil menebar 4 percikan kecil di belakangnya, lalu kepala meredup setelah sampai.
 - Durasi & easing: melesat 400ms ease-out · kepala pudar 200ms · percikan 350ms · total ≈600ms
 - Cocok untuk: Progres singkat yang perlu menarik mata, misalnya pengiriman resep atau rujukan.
-- Kode: `gallery/demos/progress-1.js`
-
-### `progress-pixel-dissolve` — Pixel Dissolve
-- Sumber: Progress · Part 1
-- Pemicu: load/loop
-- Gerak: Bagian baru tidak langsung terisi: muncul dulu sebagai ±14 piksel kecil 3px yang tersebar acak di area kenaikan dan berkelip (opacity 0 → 1 → 0.3 → 1), lalu isian utama menyusul dan piksel menghilang sehingga bagian itu menjadi padat.
-- Durasi & easing: piksel 500ms dengan jeda acak 0–150ms · isian menyusul 200ms (mulai di 250ms) · total ≈550ms
-- Cocok untuk: Progres bergaya digital, misalnya pemrosesan/rendering gambar radiologi.
 - Kode: `gallery/demos/progress-1.js`
 
 ### `pullrefresh-top-line` — Top Line
@@ -1424,14 +1280,7 @@
 - Gerak: Salinan transparan teks tautan (chip “hantu”) terangkat dari field dan terbang melengkung ke tombol (naik 22px di tengah lintasan, mengecil ke 0.3 sambil memudar). Saat tiba, tombol meletup (scale 1→1.12→1) dengan 4 percikan dan berubah hijau “✓ Copied”.
 - Durasi & easing: terbang 350ms ease-in-out · letup 300ms pegas · tahan 1400ms
 - Cocok untuk: Salin kode/ID ke clipboard dengan jejak visual “isi ini masuk ke clipboard”.
-- Kode: `gallery/demos/copy-clipboard-1.js`
-
-### `copy-flip-board` — Flip Board
-- Sumber: Copy to Clipboard · Part 1
-- Pemicu: tap
-- Gerak: Label tombol membalik seperti papan split-flap: “Copy” berputar rotateX 0→90°, berganti, lalu “Copied” masuk −90°→0 sementara warna tombol berubah hijau. Setelah ±1.4 detik label membalik lagi ke “Copy”.
-- Durasi & easing: flip 125ms ease-in + 125ms ease-out · tahan 1400ms
-- Cocok untuk: Tombol salin di tabel/daftar yang sempit, karena ukuran tombol tidak berubah.
+- Juga mewakili: `rating-score-fly` (salinan terbang melengkung ke target lalu target meletup)
 - Kode: `gallery/demos/copy-clipboard-1.js`
 
 ### `copy-pill-stretch` — Pill Stretch
@@ -1442,44 +1291,12 @@
 - Cocok untuk: Konfirmasi salin yang paling jelas di layar ponsel, misalnya tautan pembayaran.
 - Kode: `gallery/demos/copy-clipboard-1.js`
 
-### `copy-char-wave` — Char Wave
-- Sumber: Copy to Clipboard · Part 1
-- Pemicu: tap
-- Gerak: Huruf-huruf tautan melompat (translateY −4px) dan berubah mint dalam gelombang yang berjalan dari tombol ke kiri (jeda 25ms per huruf), sementara tombol menjadi hijau “✓ Copied”. Setelah ±1.4 detik teks kembali ke warna semula.
-- Durasi & easing: lompat 300ms per huruf · stagger 25ms (kanan→kiri) · tahan 1400ms
-- Cocok untuk: Salin teks pendek yang ingin ditegaskan isinya, misalnya kode voucher atau PIN sementara.
-- Kode: `gallery/demos/copy-clipboard-1.js`
-
-### `copy-outline-echo` — Outline Echo
-- Sumber: Copy to Clipboard · Part 1
-- Pemicu: tap
-- Gerak: Border field berkedip mint dan dua garis luar beriak keluar dari field (scale 1→1.04×1.25 sambil memudar, jeda 150ms), sementara tombol berubah hijau “✓ Copied”. Setelah ±1.4 detik semua kembali normal.
-- Durasi & easing: riak 450ms ease-out · jeda 150ms · tahan 1400ms
-- Cocok untuk: Konfirmasi salin yang menyorot sumber teksnya, misalnya alamat dompet atau nomor rekening.
-- Kode: `gallery/demos/copy-clipboard-1.js`
-
 ### `badge-spring-scale` — Spring Scale
 - Sumber: Notification Badge · Part 1
 - Pemicu: tap
 - Gerak: Badge muncul dengan pegas: scale 0 → 1.3 → 0.92 → 1. Tiap hitungan baru membuat badge menggembung ke 1.25 lalu memantul kembali ke 1. Saat dikosongkan, badge mengecil ke 0.
 - Durasi & easing: muncul 350ms spring · gembung 300ms · hilang 150ms ease-in
 - Cocok untuk: Badge jumlah pesan atau tugas baru, misalnya hasil lab baru di aplikasi dokter.
-- Kode: `gallery/demos/notif-badge-1.js`
-
-### `badge-slot-roll` — Slot Roll
-- Sumber: Notification Badge · Part 1
-- Pemicu: tap
-- Gerak: Angka di dalam badge bergulir vertikal seperti mesin slot: angka lama naik keluar (translateY 0 → −18px) sementara angka baru masuk dari bawah, terpotong oleh badge. Saat dikosongkan, badge memipih lalu menutup seperti tirai (scaleY ke 0).
-- Durasi & easing: gulir 180ms ease-out · muncul: titik 150ms lalu gulir · tirai 200ms ease-in
-- Cocok untuk: Penghitung yang sering berubah, misalnya antrean pasien atau jumlah item di keranjang.
-- Kode: `gallery/demos/notif-badge-1.js`
-
-### `badge-coin-flip` — Coin Flip
-- Sumber: Notification Badge · Part 1
-- Pemicu: tap
-- Gerak: Setiap perubahan angka membalik badge pada sumbu Y seperti koin (rotateY 0 → 90°, angka diganti saat badge tampak dari samping, lalu −90° → 0). Saat dikosongkan, badge membalik menjadi badge mint berisi centang, diam ≈400ms, lalu mengecil hilang.
-- Durasi & easing: setengah balik 80ms ease-in + 90ms ease-out · centang ditahan 400ms · hilang 150ms
-- Cocok untuk: Status yang berganti makna, misalnya badge tugas yang berubah menjadi "selesai".
 - Kode: `gallery/demos/notif-badge-1.js`
 
 ### `badge-gooey-drip` — Gooey Drip
@@ -1538,14 +1355,6 @@
 - Cocok untuk: kirim pesan chat dengan efek khas (mis. pesan ucapan, bukan chat klinis rutin)
 - Kode: `gallery/demos/send-2.js`
 
-### `send-genie-outbox` — Genie Outbox
-- Sumber: Send · Part 2
-- Pemicu: tap
-- Gerak: Ketuk Send: kartu draf tersedot ke ikon outbox di kanan bawah seperti efek genie macOS: bagian bawah menyempit lebih dulu (clip-path trapesium), kartu mengecil ke 0.1 dan meluncur ke tray sambil blur. Tray memantul turun 3px dan lencana merah muda "1" pop.
-- Durasi & easing: genie ≈450ms cubic-bezier(.55,0,.75,.3) (ease-in) · tray bump 200ms · lencana 280ms spring
-- Cocok untuk: kirim email/surat rujukan ke kotak keluar, memberi kesan "masuk antrean kirim"
-- Kode: `gallery/demos/send-2.js`
-
 ### `send-undo-send` — Undo Send
 - Sumber: Send · Part 2
 - Pemicu: tap
@@ -1554,20 +1363,13 @@
 - Cocok untuk: pesan/instruksi yang masih bisa dibatalkan sesaat setelah dikirim (mis. kirim resep)
 - Kode: `gallery/demos/send-2.js`
 
-### `toast-circle-reveal` — Circle Reveal
-- Sumber: Notifications · Part 3
-- Pemicu: tap
-- Gerak: Lingkaran clip-path yang berpusat di tombol Notify (di bawah toast) tumbuh ke atas dan membuka toast dengan tepi melengkung. Saat ditutup, lingkaran menyusut ke arah tombol × di kanan, seolah toast masuk ke tombol tutup.
-- Durasi & easing: buka 300ms ease-out · tutup 300ms ease-in
-- Cocok untuk: Toast yang jelas berasal dari sebuah tombol aksi, misalnya "Simpan" atau "Kirim resep".
-- Kode: `gallery/demos/toast-3.js`
-
 ### `toast-button-morph` — Button Morph
 - Sumber: Notifications · Part 3
 - Pemicu: tap
 - Gerak: Tombol Notify meregang ke atas menjadi gumpalan biru (shared element: translate + scale dari kotak tombol ke kotak toast), lalu isi toast memudar masuk saat gumpalan memudar. Saat ditutup, isi memudar kembali ke gumpalan biru yang menyusut turun dan menyatu dengan tombol.
 - Durasi & easing: morph 300ms ease-out · isi masuk 150ms (mulai 250ms) · kembali 420ms ease-in
 - Cocok untuk: Konfirmasi yang lahir dari tombol yang ditekan, misalnya "Pengingat dibuat" setelah tombol jadwalkan.
+- Juga mewakili: `menu2-button-to-panel` (tombol tumbuh menjadi panel (shared element), dipakai di menu Create)
 - Kode: `gallery/demos/toast-3.js`
 
 ### `toast-outline-draw` — Outline Draw
@@ -1576,14 +1378,7 @@
 - Gerak: Garis biru bercahaya menggambar keliling kotak searah jarum jam dari kiri atas (stroke-dashoffset 100 → 0), lalu isi toast tersapu masuk dari kiri ke kanan (clip-path inset) dan garis meredup menjadi border tipis. Saat ditutup, isi tersapu keluar ke kiri lalu garisnya dihapus kembali.
 - Durasi & easing: garis 300ms ease-in-out · sapuan isi 250ms ease-out (mulai 280ms) · tutup 200ms + 250ms
 - Cocok untuk: Notifikasi di tema gelap/teknis, misalnya status sinkronisasi data atau unggahan selesai.
-- Kode: `gallery/demos/toast-3.js`
-
-### `toast-blinds` — Blinds
-- Sumber: Notifications · Part 3
-- Pemicu: tap
-- Gerak: Toast terbuka bilah demi bilah seperti tirai jendela: 5 bilah horizontal masing-masing membuka dari garis tengahnya (clip-path polygon), berurutan dari atas ke bawah. Saat ditutup, bilah menutup mulai dari bilah paling bawah ke atas.
-- Durasi & easing: buka 350ms total, stagger ≈50ms per bilah · tutup 300ms dari bawah
-- Cocok untuk: Notifikasi bergaya rapi/arsitektural, misalnya pengumuman jadwal atau status ruangan.
+- Juga mewakili: `search-border-trace` (garis bercahaya menelusuri tepi lalu isi menyapu masuk)
 - Kode: `gallery/demos/toast-3.js`
 
 ### `toast-pixel-dissolve` — Pixel Dissolve
@@ -1592,6 +1387,7 @@
 - Gerak: Toast dirakit dari 24 ubin piksel (8×3) yang terbang dari posisi acak (±40px, berputar) lalu menempel di tempatnya, kolom kiri lebih dulu; setelah lengkap isi toast muncul dan ubin hilang. Saat ditutup, toast remuk menjadi ubin yang melayang naik dan memudar dari kiri ke kanan.
 - Durasi & easing: ubin 300ms ease-out, stagger 30ms per kolom · isi 100ms · remuk 400ms, stagger 25ms
 - Cocok untuk: Notifikasi bergaya digital/game, atau saat ingin menegaskan sesuatu "dibangun", misalnya laporan selesai dibuat.
+- Juga mewakili: `progress-pixel-dissolve` (piksel berkumpul jadi solid, dipakai di ujung progress bar); `swipedel-dust-crumble` (remuk jadi partikel lalu melayang, dipakai saat hapus baris)
 - Kode: `gallery/demos/toast-3.js`
 
 ### `toast-depth-focus` — Depth Focus
@@ -1610,6 +1406,7 @@
 - Gerak: Setiap digit adalah pita vertikal 0–9 yang berputar melewati angka-angka di antaranya (dengan blur gerak tipis) seperti odometer mobil. Digit berhenti bergiliran dari kiri (jeda 40ms); koma diam. Sorotan hari meregang ke tab baru dan bilah progres ikut berubah.
 - Durasi & easing: ≈600ms · ease-out (cubic-bezier .2,.8,.2,1) · stagger 40ms · sorotan tab 300ms pegas
 - Cocok untuk: Statistik harian (langkah, kalori), saldo, atau jumlah pasien hari ini.
+- Juga mewakili: `badge-slot-roll` (digit bergulir vertikal, dipakai di badge)
 - Kode: `gallery/demos/number-counter-1.js`
 
 ### `counter-split-flap` — Split Flap
@@ -1618,6 +1415,7 @@
 - Gerak: Setiap digit yang berubah membalik ke bawah seperti papan bandara: garis belah horizontal melintang di tengah angka, digit lama berputar rotateX 0→90°, digit baru masuk −90°→0. Digit bergiliran 50ms dari kiri.
 - Durasi & easing: 200ms ease-in + 200ms ease-out per digit · stagger 50ms
 - Cocok untuk: Angka yang berganti jarang tapi penting, misalnya nomor antrean atau jam keberangkatan.
+- Juga mewakili: `copy-flip-board` (papan split-flap, dipakai di label tombol Copy); `pwstr-flap-label` (papan split-flap, dipakai di label kekuatan sandi)
 - Kode: `gallery/demos/number-counter-1.js`
 
 ### `counter-blur-slide` — Blur Slide
@@ -1724,6 +1522,7 @@
 - Gerak: Layar baru dipotong jadi 6 bilah horizontal; tiap bilah berputar masuk dari rotateX −90° ke 0 (perspektif 400px) berurutan dari atas ke bawah dengan jeda 45ms. Kembali = bilah berputar keluar dari bawah ke atas.
 - Durasi & easing: tiap bilah ≈260ms ease-out · stagger 45ms · total ≈490ms
 - Cocok untuk: pergantian tampilan dasbor atau laporan yang ingin terasa "berganti panel"
+- Juga mewakili: `toast-blinds` (bilah tirai beruntun, dipakai di toast)
 - Kode: `gallery/demos/screen-transition-2.js`
 
 ### `screen-depth-stack` — Depth Stack
@@ -1834,3 +1633,37 @@
 - Cocok untuk: Latar hero, kartu CTA, atau layar login yang ingin terasa hidup.
 - Kode: `gallery/demos/backgrounds-1.js`
 
+## ID lama yang digabung
+
+ID berikut gerak intinya sama dengan animasi lain, jadi tidak ditampilkan terpisah. Bila prompt menyebut ID kiri, pakai ID kanan (sesuaikan warna/konteksnya).
+
+| ID lama | Pakai | Catatan |
+|---|---|---|
+| `search-circle-reveal` | `menu-circle-reveal` | lingkaran clip-path dari tombol, dipakai di search bar |
+| `toast-circle-reveal` | `menu-circle-reveal` | lingkaran clip-path dari tombol, dipakai di toast |
+| `progress-pixel-dissolve` | `toast-pixel-dissolve` | piksel berkumpul jadi solid, dipakai di ujung progress bar |
+| `swipedel-dust-crumble` | `toast-pixel-dissolve` | remuk jadi partikel lalu melayang, dipakai saat hapus baris |
+| `toast-blinds` | `screen-blinds` | bilah tirai beruntun, dipakai di toast |
+| `search-blur-focus` | `dialog-soft-focus` | masuk dari blur ke tajam, dipakai di search bar |
+| `menu5-line-expand` | `dialog-line-unfold` | garis memanjang lalu membuka jadi panel, dipakai di dropdown |
+| `tooltip-fold-open` | `dialog-line-unfold` | garis memanjang lalu membuka jadi panel, dipakai di tooltip |
+| `send-genie-outbox` | `swipedel-genie-bin` | efek genie tersedot ke ikon, dipakai saat kirim surel |
+| `menu2-button-to-panel` | `toast-button-morph` | tombol tumbuh menjadi panel (shared element), dipakai di menu Create |
+| `badge-slot-roll` | `counter-odometer-roll` | digit bergulir vertikal, dipakai di badge |
+| `copy-flip-board` | `counter-split-flap` | papan split-flap, dipakai di label tombol Copy |
+| `pwstr-flap-label` | `counter-split-flap` | papan split-flap, dipakai di label kekuatan sandi |
+| `badge-coin-flip` | `checkbox-flip-tick` | balik 3D rotateY ke sisi belakang, dipakai di badge |
+| `iconmorph1-tumble-flip` | `field3-flip-verify` | balik 3D rotateX menukar keadaan, dipakai di tombol ikon |
+| `copy-outline-echo` | `inerr-red-echo` | garis tepi beriak keluar; warna hijau untuk sukses, merah untuk error |
+| `search-border-trace` | `toast-outline-draw` | garis bercahaya menelusuri tepi lalu isi menyapu masuk |
+| `copy-char-wave` | `inerr-letter-jitter` | huruf meloncat beruntun dan berganti warna |
+| `pwstr-block-drop` | `tooltip-elastic-drop` | jatuh lalu memipih saat mendarat |
+| `inerr-alert-pop` | `checkbox-pop-burst` | ikon meletup dengan percikan; warna merah untuk error |
+| `search-jelly-pop` | `dialog-wobble-in` | muncul membesar dengan goyang jelly |
+| `search-paper-unfold` | `menu2-fold-down` | baris membuka rotateX -90° beruntun |
+| `pagination-elastic-glide` | `tabbar18-sliding-pill` | penanda aktif merentang ke tujuan lalu menyusut |
+| `segment-outline-glide` | `tabbar18-sliding-pill` | penanda aktif merentang ke tujuan; versi garis tepi saja |
+| `pagination-comet-trail` | `switch-ghost-trail` | bayangan sisa (afterimage) di sepanjang lintasan |
+| `rating-score-fly` | `copy-ghost-fly` | salinan terbang melengkung ke target lalu target meletup |
+| `stepper-glyph-spin` | `iconmorph1-spin-swap` | ikon berputar 180° sambil berganti |
+| `datepick-snap-brackets` | `field3-corner-lock` | empat siku sudut terbang lalu mengunci |

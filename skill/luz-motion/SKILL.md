@@ -1,6 +1,6 @@
 ---
 name: luz-motion
-description: Koleksi animasi UI/UX siap pakai milik dok Luz (Luz Motion), 226 animasi dari menu, tombol/toggle, input, list & swipe, tooltip, sheet, toast, loading/skeleton, progress, badge, angka, teks, pagination, date picker, latar. Tiap animasi punya ID (mis. menu-circle-reveal, switch-ghost-trail), deskripsi gerak, durasi/easing, dan kode referensi. Pakai skill ini setiap kali dok menyebut ID Luz Motion, menempelkan prompt dari galeri Luz Motion, minta "pakai animasi dari koleksi", "ganti animasi X jadi Y", "animasi menu/dropdown/toast/skeleton/toggle seperti di galeri", atau minta menambah/mengoreksi animasi di web/app. Untuk prinsip dan review UX umum, pasangkan dengan skill ux-animasi.
+description: Koleksi animasi UI/UX siap pakai milik dok Luz (Luz Motion), 198 animasi unik dari menu, tombol/toggle, input, list & swipe, tooltip, sheet, toast, loading/skeleton, progress, badge, angka, teks, pagination, date picker, latar. Tiap animasi punya ID (mis. menu-circle-reveal, switch-ghost-trail), deskripsi gerak, durasi/easing, dan kode referensi. Pakai skill ini setiap kali dok menyebut ID Luz Motion, menempelkan prompt dari galeri Luz Motion, minta "pakai animasi dari koleksi", "ganti animasi X jadi Y", "animasi menu/dropdown/toast/skeleton/toggle seperti di galeri", atau minta menambah/mengoreksi animasi di web/app. Untuk prinsip dan review UX umum, pasangkan dengan skill ux-animasi.
 ---
 
 # Luz Motion
@@ -13,7 +13,7 @@ Koleksi animasi UI yang dipelajari dari rekaman layar referensi dok Luz (seri "u
 
 ## Cara kerja saat dipanggil
 
-1. **Kenali ID.** Kalau prompt menyebut ID (bentuk `set-nama`, mis. `toast-depth-focus`), cari di `references/katalog.md`. Kalau dok hanya menyebut nama atau efeknya ("yang dropdown-nya muncul satu-satu"), cari padanan terdekat di katalog, sebutkan ID yang dipilih, lalu lanjut.
+1. **Kenali ID.** Kalau prompt menyebut ID (bentuk `set-nama`, mis. `toast-depth-focus`), cari di `references/katalog.md`. Bila ID itu ada di tabel "ID lama yang digabung" di akhir katalog, pakai ID penggantinya dan sesuaikan warna/konteks seperti catatannya. Kalau dok hanya menyebut nama atau efeknya ("yang dropdown-nya muncul satu-satu"), cari padanan terdekat di katalog, sebutkan ID yang dipilih, lalu lanjut.
 2. **Ambil kode referensi.** Buka berkas demo yang tercantum. Bila repo tidak ada di sesi ini, pakai deskripsi gerak + durasi di katalog; itu cukup untuk membangun ulang.
 3. **Sesuaikan ke proyek, jangan tempel mentah.**
    - Pakai token warna, font, radius, dan komponen yang sudah ada di proyek. Demo memakai `--d-fg/--d-bg/--d-soft/--d-mid/--d-accent`; petakan ke token proyek.
@@ -45,7 +45,7 @@ Koleksi animasi UI yang dipelajari dari rekaman layar referensi dok Luz (seri "u
 | Menu dropdown | `menu-staggered-dropdown`, `menu5-zipper-rows` | `menu-circle-reveal`, `menu5-swing-hinge` |
 | Drawer / sheet | `menu-side-drawer`, `menu-bottom-sheet` | `menu-fab-fan` |
 | Toggle | `switch-ghost-trail` | `switch-tilt-roll`, `switch-confetti-pop` |
-| Toast/notifikasi | `toast-depth-focus` | `toast-button-morph`, `toast-blinds` |
+| Toast/notifikasi | `toast-depth-focus` | `toast-button-morph`, `toast-pixel-dissolve` |
 | Loading konten | `skeleton-blur-focus` | `skeleton-flip-tiles`, `skeleton-comet-outline` |
 | Error input | `inerr-message-drop`, `inerr-red-echo` | `inerr-tilt-wobble` |
 | Angka berubah | `counter-smooth-count`, `counter-odometer-roll` | `counter-decode-lock` |
@@ -56,5 +56,5 @@ ID di tabel ini adalah contoh dari katalog. Selalu cek `references/katalog.md` u
 ## Hubungan dengan skill lain
 
 - `ux-animasi`: prinsip (20 prinsip, hukum UX) dan review. Luz Motion adalah katalog konkretnya.
-- `luz-koreksi-web`: dok bisa menandai elemen di web lalu menulis "pakai `toast-depth-focus`". Catatan itu langsung dikerjakan dengan skill ini.
+- `luz-koreksi-web`: fitur Motion di panel catatan menyarankan animasi per objek yang diklik, memutar pratinjaunya langsung di objek web, dan menulis `@N animasi: \`id\`` ke catatan. Catatan itu dikerjakan dengan skill ini.
 - `poles-tampilan`: animasi ekspresif tidak boleh menutupi desain yang belum rapi. Poles dulu, baru beri gerak.

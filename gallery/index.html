@@ -64,6 +64,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .g-trig { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px }
 .g-meta h3 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em }
 .g-motion { margin: 0; font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+.g-var { margin: 0; font-size: 11.5px; color: var(--muted); font-style: italic }
+.g-card.g-flash { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent) }
 .g-timing { margin: 0; font-family: var(--f-mono); font-size: 11px; color: var(--muted) }
 .g-actions { display: flex; gap: 6px; padding: 10px 14px 14px; align-items: center; flex-wrap: wrap }
 .g-pick { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; cursor: pointer; margin-right: auto; min-height: 36px }
@@ -141,6 +143,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </aside>
 <textarea id="copy-fallback" hidden aria-label="Teks untuk disalin"></textarea>
 
+<script src="duplikat.js"></script>
 <script src="core.js"></script>
 <!--DEMOS-->
 <script src="demos/accordion-2.js"></script>
@@ -185,4 +188,5 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <script src="demos/toast-3.js"></script>
 <script src="demos/tooltip-1.js"></script>
 <!--/DEMOS-->
+
 

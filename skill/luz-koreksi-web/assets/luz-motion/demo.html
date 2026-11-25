@@ -1,0 +1,125 @@
+<title>Koreksi Motion Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: an example clinic queue screen (the "web under test"); the koreksi panel floats over it. */
+:root {
+  --bg: #f3f5f4; --surface: #ffffff; --ink: #18201d; --muted: #5d6b66; --line: #d9e0dd;
+  --accent: #0f766e; --accent-ink: #ffffff; --warn: #b45309; --soft: #e6f2f0;
+  --f-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101614; --surface: #18211e; --ink: #e6ede9; --muted: #9aaba4; --line: #2a3632; --accent: #2dd4bf; --accent-ink: #062b27; --warn: #f59e0b; --soft: #163631; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #101614; --surface: #18211e; --ink: #e6ede9; --muted: #9aaba4; --line: #2a3632; --accent: #2dd4bf; --accent-ink: #062b27; --warn: #f59e0b; --soft: #163631; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--f-ui); margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 120px }
+button, input, select, textarea { font: inherit; color: inherit }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 18px }
+.intro { margin-top: 18px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px }
+.intro b { color: var(--accent) }
+.app-top { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding-block: 12px; border-bottom: 1px solid var(--line) }
+.brand { font-weight: 700; letter-spacing: -.01em; margin-right: auto }
+.nav { display: flex; gap: 4px; flex-wrap: wrap }
+.nav a { padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 14px }
+.nav a[aria-current="page"] { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--line) }
+.icon-btn { position: relative; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer }
+.icon-btn svg { width: 20px; height: 20px }
+.badge { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; border-radius: 10px; background: #e11d48; color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; padding: 0 5px }
+h1 { margin: 0; font-size: 26px; letter-spacing: -.02em }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; min-width: 150px }
+.stat small { color: var(--muted); display: block; font-size: 12px }
+.stat .num { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums }
+.btn { border-radius: 10px; padding: 10px 16px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; min-height: 44px; font-weight: 600 }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent) }
+.seg { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 3px }
+.seg button { border: 0; background: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; color: var(--muted); min-height: 38px }
+.seg button[aria-selected="true"] { background: var(--soft); color: var(--ink); font-weight: 600 }
+.grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 10px; min-width: 0; align-content: start }
+.card h2 { margin: 0; font-size: 16px }
+.list { list-style: none; margin: 0; padding: 0; display: grid }
+.list li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 2px; border-top: 1px solid var(--line) }
+.list li:first-child { border-top: 0 }
+.av { width: 36px; height: 36px; border-radius: 50%; background: var(--soft); color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 13px }
+.list small { color: var(--muted); display: block; font-size: 12.5px }
+.chip { font-size: 12px; border-radius: 999px; padding: 3px 9px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap }
+.chip.now { border-color: var(--accent); color: var(--accent) }
+label { font-size: 13px; color: var(--muted); display: grid; gap: 4px }
+input[type=text], select, textarea { border: 1px solid var(--line); background: var(--bg); border-radius: 10px; padding: 9px 11px; width: 100% }
+.switch { display: flex; align-items: center; gap: 10px; color: var(--ink) }
+.switch input { width: 40px; height: 22px; accent-color: var(--accent) }
+.progress { height: 10px; border-radius: 5px; background: var(--soft); overflow: hidden }
+.progress span { display: block; height: 100%; width: 65%; background: var(--accent); border-radius: 5px }
+.toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.2) }
+dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); padding: 18px; max-width: 340px }
+dialog::backdrop { background: rgba(0,0,0,.35) }
+.tag { font-size: 11px; color: var(--muted) }
+</style>
+
+<div class="wrap">
+  <p class="intro">Ini <b>halaman contoh</b> (data fiktif) untuk mencoba luz-koreksi-web + Luz Motion. Tekan <b>Catatan uji</b> di kanan bawah, lalu <b>klik kanan</b> objek apa saja (tekan lama di HP): tombol, menu, kotak isian, baris daftar, badge, angka, kartu. Panel menyarankan animasi yang cocok, <b>▶ Coba</b> memutarnya langsung pada objek itu, <b>Pilih</b> menuliskannya ke catatan, lalu <b>Salin catatan</b> untuk Claude.</p>
+
+  <header class="app-top">
+    <span class="brand">Klinik Contoh · Poli Kandungan</span>
+    <nav class="nav" aria-label="Menu utama">
+      <a href="#antrean" aria-current="page">Antrean</a><a href="#pasien">Pasien</a><a href="#jadwal">Jadwal</a><a href="#laporan">Laporan</a>
+    </nav>
+    <button class="icon-btn" type="button" aria-label="Notifikasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="badge">3</span></button>
+  </header>
+
+  <h1>Antrean hari ini</h1>
+
+  <div class="row">
+    <div class="stat"><small>Pasien menunggu</small><span class="num">12</span></div>
+    <div class="stat"><small>Rata-rata tunggu</small><span class="num">18 mnt</span></div>
+    <button class="btn primary" type="button" data-act="panggil">Panggil berikutnya</button>
+    <button class="btn" type="button">Tambah pasien</button>
+    <div class="seg" role="tablist" aria-label="Saring antrean">
+      <button role="tab" aria-selected="true" type="button">Semua</button><button role="tab" aria-selected="false" type="button">USG</button><button role="tab" aria-selected="false" type="button">Kontrol</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <section class="card" aria-label="Daftar antrean">
+      <h2>Daftar antrean <span class="tag">(contoh)</span></h2>
+      <ul class="list">
+        <li><span class="av">A1</span><span>Ny. Contoh Satu<small>USG kehamilan · 09.10</small></span><span class="chip now">Dipanggil</span></li>
+        <li><span class="av">A2</span><span>Ny. Contoh Dua<small>Kontrol nifas · 09.25</small></span><span class="chip">Menunggu</span></li>
+        <li><span class="av">A3</span><span>Ny. Contoh Tiga<small>Konsultasi · 09.40</small></span><span class="chip">Menunggu</span></li>
+        <li><span class="av">A4</span><span>Ny. Contoh Empat<small>USG · 09.55</small></span><span class="chip">Menunggu</span></li>
+      </ul>
+    </section>
+
+    <section class="card" aria-label="Catatan cepat">
+      <h2>Catatan cepat</h2>
+      <label for="f-nama">Nama pasien<input id="f-nama" type="text" placeholder="Ketik nama"></label>
+      <label for="f-poli">Layanan<select id="f-poli"><option>USG</option><option>Kontrol</option><option>Konsultasi</option></select></label>
+      <label for="f-keluhan">Keluhan<textarea id="f-keluhan" rows="2" placeholder="Keluhan utama"></textarea></label>
+      <label class="switch" for="f-prio"><input id="f-prio" type="checkbox" role="switch"> Prioritas</label>
+      <button class="btn primary" type="button" data-act="simpan">Simpan</button>
+      <div><small class="tag">Rekap harian 65%</small><div class="progress" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="Rekap harian"><span></span></div></div>
+    </section>
+  </div>
+</div>
+
+<div class="toast" role="status" hidden>Catatan tersimpan</div>
+<dialog class="dlg"><h2 style="margin:0 0 8px;font-size:17px">Panggil pasien berikutnya?</h2><p style="margin:0 0 14px;color:var(--muted)">Ny. Contoh Dua · Kontrol nifas</p><form method="dialog" class="row"><button class="btn" value="batal">Batal</button><button class="btn primary" value="ok">Panggil</button></form></dialog>
+
+<script>
+// The page's own behaviour (works normally while Mode catatan is off)
+document.querySelector('[data-act=simpan]').addEventListener('click', function () {
+  var t = document.querySelector('.toast'); t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, 1800);
+});
+document.querySelector('[data-act=panggil]').addEventListener('click', function () { document.querySelector('.dlg').showModal(); });
+document.querySelectorAll('.seg button').forEach(function (b) {
+  b.addEventListener('click', function () { document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-selected', x === b); }); });
+});
+</script>
+<script src="luz-motion-data.js"></script>
+<script src="luz-motion-koreksi.js"></script>
+<script src="panel-motion.js"></script>
