@@ -42,7 +42,14 @@ button { cursor: pointer; }
 .apung svg { width: 20px; height: 20px; flex: none; }
 .apung .angka { min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: #b42318; color: #fff; font-size: 12px; display: grid; place-items: center; }
 .apung[aria-pressed="true"] .angka { background: #b42318; color: #fff; }
-@media (max-width: 719px) { .apung .teks { display: none; } .apung { padding: 0 10px; } }
+/* HP: tombol menjadi tab kecil menempel di tepi kanan layar (di atas menu bawah) agar tidak menutupi isi kartu,
+   mis. panah naik/turun urutan panggil (temuan 2026-11-14). Lebar 34 px = jarak tepi layar + padding kartu. */
+@media (max-width: 719px) {
+  .apung .teks { display: none; }
+  .apung { right: 0; min-width: 34px; width: 34px; min-height: 52px; padding: 6px 0; flex-direction: column; justify-content: center; gap: 3px;
+    border-right: 0; border-radius: 12px 0 0 12px; }
+  .apung .angka { min-width: 18px; height: 18px; font-size: 11px; padding: 0 4px; }
+}
 
 .panel { position: fixed; z-index: 6; background: #fffdf9; border: 1px solid #e3cfb8; box-shadow: 0 12px 40px rgba(45, 33, 24, .28);
   display: flex; flex-direction: column; overflow: hidden; }
@@ -124,4 +131,25 @@ textarea { width: 100%; min-height: 110px; resize: vertical; border: 1px solid #
 .riwayat li { padding: 3px 0; border-top: 1px dashed #ead8c3; }
 input.ket { width: 100%; border: 1px solid #c9ad8f; border-radius: 8px; padding: 6px 8px; background: #fff; min-height: 34px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Fitur Motion (2026-11-25): bagian Animasi per objek, terlipat bawaan (keputusan B2 a). */
+.mo-ringkas { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 0 30px; }
+.mo-buka { border: 1px dashed #c9ad8f; background: #fffaf5; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 700; color: #4a3424; min-height: 28px; }
+.mo-buka[aria-expanded="true"] { border-style: solid; border-color: #9a3412; color: #7c2d12; }
+.mo-terpilih { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; color: #14532d; }
+.mo-terpilih .ikon { min-width: 26px; min-height: 26px; }
+.mo-isi { margin: 6px 0 0 30px; }
+.mo-daftar { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.mo-hasil:not(:empty) { margin-top: 6px; }
+.mo-kartu { display: flex; gap: 6px; align-items: center; border: 1px solid #ead8c3; border-radius: 8px; padding: 6px 6px 6px 8px; background: #fffaf5; }
+.mo-kartu.dipilih { border-color: #1d4ed8; box-shadow: 0 0 0 1px #1d4ed8; background: #f3f6ff; }
+.mo-nama { flex: 1; min-width: 0; display: grid; }
+.mo-nama b { font-size: 13px; }
+.mo-nama code { font-size: 11px; color: #4a3424; word-break: break-all; }
+.mo-nama small { font-size: 11px; color: #6b5444; }
+.mo-tombol { display: flex; gap: 4px; flex: none; }
+.mo-tombol .ikon:disabled { opacity: .5; cursor: default; }
+.mo-tombol .ikon.aktif { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+.mo-isi a { color: #1d4ed8; font-weight: 700; }
+@media (max-width: 719px) { .mo-ringkas, .mo-isi { margin-left: 0; } .mo-kartu { flex-wrap: wrap; } .mo-tombol { width: 100%; justify-content: flex-end; } }
 `;

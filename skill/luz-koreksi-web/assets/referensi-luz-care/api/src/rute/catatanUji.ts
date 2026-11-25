@@ -18,7 +18,7 @@ export const BATAS_GAMBAR_CATATAN_UJI = 1.5 * 1024 * 1024;
 export const MAKS_OBJEK = 5;
 export const STATUS_CATATAN_UJI = ["baru", "dikerjakan", "selesai", "diterima", "dibuka-lagi"] as const;
 const APLIKASI = ["staf", "pasien", "masuk"] as const;
-const KATEGORI = ["tampilan", "alur", "teks", "error"] as const;
+const KATEGORI = ["tampilan", "alur", "teks", "error", "animasi"] as const;
 const PRIORITAS = ["tinggi", "sedang", "rendah"] as const;
 
 declare module "fastify" {

@@ -5,11 +5,18 @@
 import { ambilGambar } from "./gambar";
 import { GAYA, GAYA_HALAMAN } from "./gaya";
 import {
+  animasi, cariAnimasi, galeri, hapusBaris, keluarga, motionAda, pasangBaris, pratinjau, rekomendasi, type Animasi,
+} from "./motion";
+import {
   aplikasiIni, gambarkan, halamanIni, kotakDari, namaObjek, perangkatIni, rantaiDari, type Halaman, type Objek,
 } from "./tangkap";
 
 type Penulis = { jenis: "staf"; nama: string; peran: string } | { jenis: "pasien" } | null;
-interface Butir { objek: Objek; el: Element | null; rantai: Element[]; pilih: number }
+interface Butir {
+  objek: Objek; el: Element | null; rantai: Element[]; pilih: number;
+  /** Fitur Motion: jenis objek, 6 animasi yang cocok, dan animasi yang dipilih penguji (null = belum). */
+  jenis: string; rek: string[]; animasi: string | null;
+}
 interface Catatan {
   id: string; nomor: number; dibuatPada: string; diubahPada: string; aplikasi: string; halaman: Halaman;
   perangkat: { lebar: number; tinggi: number; rasio: number; sentuh: boolean; peramban: string; tema: string };
@@ -19,7 +26,7 @@ interface Catatan {
 }
 
 const MAKS_OBJEK = 5;
-const KATEGORI: Array<[string, string]> = [["tampilan", "Tampilan"], ["alur", "Alur"], ["teks", "Teks"], ["error", "Error"]];
+const KATEGORI: Array<[string, string]> = [["tampilan", "Tampilan"], ["alur", "Alur"], ["teks", "Teks"], ["error", "Error"], ["animasi", "Animasi"]];
 const PRIORITAS: Array<[string, string]> = [["tinggi", "Tinggi"], ["sedang", "Sedang"], ["rendah", "Rendah"]];
 const STATUS: Array<[string, string]> = [
   ["baru", "Baru"], ["dikerjakan", "Sedang dikerjakan"], ["selesai", "Selesai, perlu dicek"], ["diterima", "Diterima"], ["dibuka-lagi", "Dibuka lagi"],
@@ -60,6 +67,9 @@ const k = {
   memuat: false,
   saring: { status: "antrean", aplikasi: "", kategori: "", halamanIni: false },
   detail: null as string | null,
+  /** Fitur Motion: objek yang bagian Animasinya terbuka (-1 = semua terlipat, keputusan B2 a) dan kata pencarian. */
+  motionBuka: -1,
+  motionCari: "",
 };
 
 /** Aplikasi staf tidak mengubah alamat per menu, jadi "halaman yang sama" = alamat + menu yang aktif. */
@@ -72,7 +82,7 @@ function simpanKeadaan() {
   try {
     sessionStorage.setItem(SIMPAN_KUNCI, JSON.stringify({
       aktif: k.aktif, buka: k.buka, kecil: k.kecil, sisi: k.sisi, isi: k.isi, kategori: k.kategori, prioritas: k.prioritas, gambar: k.gambar,
-      halaman: k.halaman, objek: k.butir.map((b) => b.objek), saring: k.saring,
+      halaman: k.halaman, objek: k.butir.map((b) => b.objek), animasi: k.butir.map((b) => b.animasi), saring: k.saring,
     }));
   } catch { /* penyimpanan peramban tidak tersedia: tidak apa-apa */ }
 }
@@ -88,10 +98,12 @@ function muatKeadaan() {
     });
     // Objek dari halaman sebelumnya: dicari lagi lewat pemilihnya bila halamannya sama.
     const sama = s.halaman && halamanSama(s.halaman);
-    k.butir = (Array.isArray(s.objek) ? s.objek : []).slice(0, MAKS_OBJEK).map((o: Objek) => {
+    const pilihan: unknown[] = Array.isArray(s.animasi) ? s.animasi : [];
+    k.butir = (Array.isArray(s.objek) ? s.objek : []).slice(0, MAKS_OBJEK).map((o: Objek, i: number) => {
       let el: Element | null = null;
       if (sama && o.pemilih) { try { el = document.querySelector(o.pemilih); } catch { el = null; } }
-      return { objek: o, el, rantai: el ? [el] : [], pilih: 0 };
+      const id = typeof pilihan[i] === "string" ? pilihan[i] as string : null;
+      return { objek: o, el, rantai: el ? [el] : [], pilih: 0, ...rekomendasiButir(el), animasi: animasi(id) ? id : null };
     });
   } catch { /* abaikan */ }
 }
@@ -175,6 +187,12 @@ async function muatDaftar() {
 
 // ---- Objek -----------------------------------------------------------------------------------------------------------------------
 
+/** Rekomendasi animasi untuk objek (kosong bila fitur Motion tidak termuat atau objek tidak lagi di layar). */
+function rekomendasiButir(el: Element | null): { jenis: string; rek: string[] } {
+  const r = rekomendasi(el);
+  return { jenis: r.label, rek: r.ids };
+}
+
 function tambahObjek(target: Element, dariMouse: boolean) {
   const { rantai, bawaan } = rantaiDari(target, host);
   const el = rantai[bawaan]!;
@@ -188,7 +206,7 @@ function tambahObjek(target: Element, dariMouse: boolean) {
     setPesan(`Maksimal ${MAKS_OBJEK} objek per catatan. Hapus salah satu dulu.`, true);
     return;
   }
-  k.butir.push({ objek: gambarkan(el, host), el, rantai, pilih: bawaan });
+  k.butir.push({ objek: gambarkan(el, host), el, rantai, pilih: bawaan, ...rekomendasiButir(el), animasi: null });
   if (!k.halaman) k.halaman = halamanIni();
   setPesan("", false, false);
   simpanKeadaan();
@@ -203,12 +221,15 @@ function pilihWadah(i: number, tingkat: number) {
   b.pilih = tingkat;
   b.el = el;
   b.objek = gambarkan(el, host);
+  Object.assign(b, rekomendasiButir(el));
   simpanKeadaan();
   gambarPanel();
 }
 
 function hapusObjek(i: number) {
+  if (k.butir[i]?.animasi || /^@\d animasi: /m.test(k.isi)) k.isi = hapusBaris(k.isi, i + 1);
   k.butir.splice(i, 1);
+  if (k.motionBuka === i) k.motionBuka = -1; else if (k.motionBuka > i) k.motionBuka--;
   if (!k.butir.length && !k.isi.trim()) k.halaman = null;
   simpanKeadaan();
   gambarPanel();
@@ -374,7 +395,7 @@ function htmlTulis(): string {
       return `<div class="objek"><div class="baris"><span class="nomor">${i + 1}</span><span class="nama">${esc(namaObjek(b.objek))}</span>
         <span class="kecil-aksi">${b.el && b.el.isConnected ? `<button type="button" class="ikon" data-aksi="sorot-butir" data-i="${i}">Sorot</button>` : ""}
         <button type="button" class="ikon" data-aksi="hapus-objek" data-i="${i}" aria-label="Hapus objek ${i + 1}">×</button></span></div>
-        ${b.objek.jejak.length ? `<div class="jejak">${esc(b.objek.jejak.join(" › "))}</div>` : ""}${hilang}${tingkat}</div>`;
+        ${b.objek.jejak.length ? `<div class="jejak">${esc(b.objek.jejak.join(" › "))}</div>` : ""}${hilang}${tingkat}${htmlMotion(b, i)}</div>`;
     }).join("")
     : `<p class="petunjuk">${k.aktif ? "Klik kanan objek di layar (tekan lama di iPad/HP) untuk menyebutnya." : "Nyalakan Mode catatan, lalu klik kanan objek di layar (tekan lama di iPad/HP)."}
        Tanpa objek, catatan berlaku untuk halaman ini.</p>`;
@@ -395,6 +416,59 @@ function htmlTulis(): string {
     <div class="aksi"><button type="button" class="utama" data-aksi="simpan" ${k.sedang ? "disabled" : ""}>${k.sedang ? "Menyimpan…" : "Simpan"}</button>
       <button type="button" class="kedua" data-aksi="kosongkan" ${k.sedang ? "disabled" : ""}>Kosongkan</button></div>
     <p class="pesan ${k.galat ? "galat" : ""}" role="status">${esc(k.pesan)}</p>`;
+}
+
+// ---- Fitur Motion: bagian "Animasi" per objek ------------------------------------------------------------------------------------
+
+function kartuAnimasi(d: Animasi, i: number, b: Butir): string {
+  const dipilih = b.animasi === d.id;
+  const bisaCoba = !!(b.el && b.el.isConnected);
+  return `<li class="mo-kartu${dipilih ? " dipilih" : ""}"><span class="mo-nama"><b>${esc(d.n)}</b><code>${esc(d.id)}</code>
+      <small>${esc(keluarga(d.g))} · ${esc(d.d)}</small></span>
+    <span class="mo-tombol"><button type="button" class="ikon" data-aksi="motion-coba" data-i="${i}" data-id="${esc(d.id)}" ${bisaCoba ? "" : "disabled"}
+      aria-label="Coba ${esc(d.n)} pada objek ${i + 1}">▶ Coba</button>
+    <button type="button" class="ikon${dipilih ? " aktif" : ""}" data-aksi="motion-pilih" data-i="${i}" data-id="${esc(d.id)}" aria-pressed="${dipilih}">${dipilih ? "Dipilih" : "Pilih"}</button></span></li>`;
+}
+
+function htmlMotion(b: Butir, i: number): string {
+  if (!motionAda() || (!b.rek.length && !b.animasi)) return "";
+  const pilihan = animasi(b.animasi);
+  const buka = k.motionBuka === i;
+  const ringkas = `<div class="mo-ringkas"><button type="button" class="mo-buka" data-aksi="motion-buka" data-i="${i}" aria-expanded="${buka}">
+      Animasi${b.jenis ? ` untuk ${esc(b.jenis.toLowerCase())}` : ""} (${b.rek.length}) ${buka ? "▾" : "▸"}</button>
+    ${pilihan ? `<span class="mo-terpilih">✓ ${esc(pilihan.n)} <button type="button" class="ikon" data-aksi="motion-lepas" data-i="${i}" aria-label="Batalkan animasi objek ${i + 1}">×</button></span>` : ""}</div>`;
+  if (!buka) return ringkas;
+  const rek = b.rek.map((id) => animasi(id)).filter((d): d is Animasi => !!d);
+  const hasil = cariAnimasi(k.motionCari);
+  return `${ringkas}<div class="mo-isi">
+    <ul class="mo-daftar">${rek.map((d) => kartuAnimasi(d, i, b)).join("")}</ul>
+    <label class="judul" for="cu-mo-cari">Cari animasi lain</label>
+    <input id="cu-mo-cari" class="ket" type="search" maxlength="40" placeholder="mis. blur, stagger, sheet" value="${esc(k.motionCari)}" data-isian="motion-cari" data-i="${i}">
+    <ul class="mo-daftar mo-hasil">${hasil.map((d) => kartuAnimasi(d, i, b)).join("")}</ul>
+    <p class="info">▶ Coba memutar perkiraan gerak pada objek ${i + 1} di layar; versi persisnya di
+      <a href="${esc(galeri())}${pilihan ? `#c-${esc(pilihan.id)}` : ""}" target="_blank" rel="noopener">galeri Luz Motion ↗</a>.</p></div>`;
+}
+
+function pilihAnimasi(i: number, id: string) {
+  const b = k.butir[i];
+  if (!b || !animasi(id)) return;
+  const kosong = !k.isi.trim();
+  b.animasi = id;
+  k.isi = pasangBaris(k.isi, i + 1, id).slice(0, 2000);
+  // Catatan yang isinya hanya permintaan animasi langsung berkategori Animasi; penguji tetap bisa menggantinya.
+  if (kosong) k.kategori = "animasi";
+  if (!k.halaman) k.halaman = halamanIni();
+  simpanKeadaan();
+  gambarPanel();
+}
+
+function lepasAnimasi(i: number) {
+  const b = k.butir[i];
+  if (!b) return;
+  b.animasi = null;
+  k.isi = k.isi.replace(new RegExp(`^@${i + 1} animasi: .*(\\n|$)`, "m"), "").replace(/\n+$/, "");
+  simpanKeadaan();
+  gambarPanel();
 }
 
 function tersaring(): Catatan[] {
@@ -532,6 +606,7 @@ async function simpan() {
     k.butir = [];
     k.isi = "";
     k.halaman = null;
+    k.motionBuka = -1;
     k.sedang = false;
     simpanKeadaan();
     setPesan(`Tersimpan sebagai #${j.nomor}${catatanGambar}.`);
@@ -647,7 +722,7 @@ akar.addEventListener("click", (e) => {
     case "kategori": k.kategori = t.dataset.v!; simpanKeadaan(); gambarPanel(); break;
     case "prioritas": k.prioritas = t.dataset.v!; simpanKeadaan(); gambarPanel(); break;
     case "simpan": void simpan(); break;
-    case "kosongkan": k.butir = []; k.isi = ""; k.halaman = null; simpanKeadaan(); setPesan(""); break;
+    case "kosongkan": k.butir = []; k.isi = ""; k.halaman = null; k.motionBuka = -1; simpanKeadaan(); setPesan(""); break;
     case "muat": void muatDaftar(); break;
     case "salin": {
       const daftar = tersaring();
@@ -662,6 +737,14 @@ akar.addEventListener("click", (e) => {
       if (c && o) sorotPemilih(o, c.halaman);
       break;
     }
+    case "motion-buka": k.motionBuka = k.motionBuka === i ? -1 : i; k.motionCari = ""; gambarPanel(); break;
+    case "motion-coba": {
+      const el = k.butir[i]?.el;
+      if (el && el.isConnected && t.dataset.id) { el.scrollIntoView({ block: "nearest" }); pratinjau(el, t.dataset.id); }
+      break;
+    }
+    case "motion-pilih": pilihAnimasi(i, t.dataset.id ?? ""); break;
+    case "motion-lepas": lepasAnimasi(i); break;
     case "status": void ubahStatus(t.dataset.v!); break;
     case "hapus": void hapusCatatan(); break;
   }
@@ -674,6 +757,13 @@ akar.addEventListener("input", (e) => {
     (akar.querySelector(".hitung") as HTMLElement).textContent = `${k.isi.length}/2000`;
     if (!k.halaman) k.halaman = halamanIni();
     simpanKeadaan();
+  } else if (t.dataset.isian === "motion-cari") {
+    // Hasil pencarian diganti di tempat agar kotak cari tidak kehilangan fokus.
+    k.motionCari = (t as HTMLInputElement).value;
+    const i = Number(t.dataset.i);
+    const b = k.butir[i];
+    const wadah = akar.querySelector(".mo-hasil");
+    if (b && wadah) wadah.innerHTML = cariAnimasi(k.motionCari).map((d) => kartuAnimasi(d, i, b)).join("");
   }
 });
 akar.addEventListener("change", (e) => {

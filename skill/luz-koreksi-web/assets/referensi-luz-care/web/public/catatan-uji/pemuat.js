@@ -8,6 +8,17 @@
     if (!r.ok) return;
     const j = await r.json();
     if (!j || j.aktif !== true) return;
+    // Fitur Motion (2026-11-25): katalog Luz Motion + rekomendasi/pratinjau animasi, dimuat sebelum modul. Bila gagal, Catatan uji
+    // tetap jalan tanpa bagian Animasi.
+    for (const src of ["/catatan-uji/luz-motion-data.js", "/catatan-uji/luz-motion.js"]) {
+      await new Promise((ok) => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.onload = ok;
+        s.onerror = ok;
+        document.head.appendChild(s);
+      });
+    }
     try {
       await import("/catatan-uji/catatan-uji.js");
     } catch {

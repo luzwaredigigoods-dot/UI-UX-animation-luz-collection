@@ -33,6 +33,12 @@ The real object is not the gallery mini-UI, so the preview plays a **family** of
 - A new preview on the same object cancels the previous one (`hentikan`).
 - Tell the tester: the preview is an approximation; the exact version is in the gallery (the panel has a link).
 
+## Status in Luz Care (2026-11-25)
+
+Already installed in Luz Care (PR `luzwaredigigoods-dot/luz-care#7`, branch `claude/catatan-uji-motion`). The reference code in `assets/referensi-luz-care/` has been updated to that version: `web/src/catatanUji/motion.ts` (TS wrapper), `index.ts` (Animasi section, `motion-*` events), `gaya.ts` (`.mo-*`), `public/catatan-uji/pemuat.js` (loads the catalog), `api/migrations/032_catatan_uji_animasi.sql` + `api/src/rute/catatanUji.ts` (Animasi category), and `api/test/catatanUjiMotion.test.ts`. For a new web, copy from there; the steps below explain what each part does.
+
+Note on the Vite dev server: it refuses `import()` of files in `public/`. Test the module on a build (`vite build` + `vite preview`).
+
 ## Integration into the reference code (`assets/referensi-luz-care/web/src/catatanUji/`)
 
 There are no backend changes: the animation line is stored in the note text (`isi`), so the database, API, and tests stay as they are.
