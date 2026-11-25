@@ -73,8 +73,8 @@
       var w = root.querySelector('.w'), ts = w.querySelector('.ts'), nf = w.querySelector('.nf'), bl = document.createElement('span'), on = false, k = 0, T = [];
       var M = [['✓', 'Upload complete', 'report-final.pdf · 2.4 MB'], ['J', 'Jun sent a message', 'Are we still on for 7?']];
       bl.className = 'bl'; w.insertBefore(bl, nf);
-      function from() {
-        var dx = nf.offsetLeft - nf.offsetWidth / 2 + nf.offsetWidth / 2 - (ts.offsetLeft + ts.offsetWidth / 2), dy = nf.offsetTop + nf.offsetHeight / 2 - (ts.offsetTop + ts.offsetHeight / 2);
+      function from() { // .nf is centred with left:50% + translateX(-50%), so offsetLeft is its centre x
+        var dx = nf.offsetLeft - (ts.offsetLeft + ts.offsetWidth / 2), dy = nf.offsetTop + nf.offsetHeight / 2 - (ts.offsetTop + ts.offsetHeight / 2);
         return 'translate(' + dx + 'px,' + dy + 'px) scale(' + nf.offsetWidth / ts.offsetWidth + ',' + nf.offsetHeight / ts.offsetHeight + ')';
       }
       function enter() {
