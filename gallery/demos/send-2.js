@@ -56,7 +56,7 @@
       '& .pic{flex:none;width:56px;border-radius:4px;background:radial-gradient(circle at 30% 30%,#fff 0 6%,transparent 7%),linear-gradient(#1b2f7a,#2f6fe0)}' +
       '& .pc small{font:italic 8px/1.3 Georgia,serif;color:#333}& .stp{display:block;width:10px;height:12px;margin:-28px 0 0 34px;background:#ff6b9a;border-radius:1px}' +
       '& .dt{position:absolute;left:118px;top:150px;width:4px;height:4px;border-radius:50%;background:var(--d-mid);opacity:0}& .d2{left:108px;top:162px}& .d3{left:126px;top:172px}' +
-      '& .ok{position:absolute;left:68px;top:84px;width:100px;height:28px;border-radius:99px;background:linear-gradient(90deg,#3f8cff,#6f5cff);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;opacity:0}' +
+      '& .ok{position:absolute;left:68px;top:84px;width:100px;height:28px;border-radius:99px;background:linear-gradient(90deg,#3f8cff,#6f5cff);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;opacity:0;pointer-events:none}' +
       '& .hint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:var(--d-mid);font-size:9px}',
     js: function (root, api) {
       var pc = root.querySelector('.pc'), ok = root.querySelector('.ok'), dots = root.querySelectorAll('.dt'), y0 = null, dy = 0, t = [], k = api.reduce ? 0.01 : 1;
@@ -172,7 +172,7 @@
       '& .dr small{font-size:8.5px;color:var(--d-mid)}& .dr i{height:4px;border-radius:2px;background:var(--d-soft)}& .dr i.s{width:60%}' +
       '& .sb{justify-self:end;border:0;border-radius:99px;padding:6px 14px;background:linear-gradient(90deg,#3f8cff,#6f5cff);color:#fff;font:600 9.5px inherit;cursor:pointer;margin-top:4px}' +
       '& .tray{position:absolute;right:10px;bottom:16px}& .tray svg{fill:none;stroke:var(--d-fg);stroke-width:1.6;stroke-linejoin:round}' +
-      '& .bd{position:absolute;right:-6px;top:-6px;width:15px;height:15px;border-radius:50%;background:#ff4f8a;color:#fff;font-size:8.5px;display:grid;place-items:center;opacity:0}',
+      '& .bd{position:absolute;right:-6px;top:-6px;width:15px;height:15px;border-radius:50%;background:#ff4f8a;color:#fff;font-size:8.5px;display:grid;place-items:center;opacity:0;pointer-events:none}',
     js: function (root, api) {
       var dr = root.querySelector('.dr'), tray = root.querySelector('.tray'), bd = root.querySelector('.bd'), busy = false, t = [], k = api.reduce ? 0.01 : 1;
       function send() {
