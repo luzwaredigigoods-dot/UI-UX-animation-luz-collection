@@ -1,6 +1,6 @@
 ---
 name: luz-motion
-description: Koleksi animasi UI/UX siap pakai milik dok Luz (Luz Motion), sekitar 200 animasi dari menu, tombol/toggle, input, list & swipe, tooltip, sheet, toast, loading/skeleton, progress, badge, angka, teks, pagination, date picker, latar. Tiap animasi punya ID (mis. menu-circle-reveal, switch-ghost-trail), deskripsi gerak, durasi/easing, dan kode referensi. Pakai skill ini setiap kali dok menyebut ID Luz Motion, menempelkan prompt dari galeri Luz Motion, minta "pakai animasi dari koleksi", "ganti animasi X jadi Y", "animasi menu/dropdown/toast/skeleton/toggle seperti di galeri", atau minta menambah/mengoreksi animasi di web/app. Untuk prinsip dan review UX umum, pasangkan dengan skill ux-animasi.
+description: Koleksi animasi UI/UX siap pakai milik dok Luz (Luz Motion), 214 animasi dari menu, tombol/toggle, input, list & swipe, tooltip, sheet, toast, loading/skeleton, progress, badge, angka, teks, pagination, date picker, latar. Tiap animasi punya ID (mis. menu-circle-reveal, switch-ghost-trail), deskripsi gerak, durasi/easing, dan kode referensi. Pakai skill ini setiap kali dok menyebut ID Luz Motion, menempelkan prompt dari galeri Luz Motion, minta "pakai animasi dari koleksi", "ganti animasi X jadi Y", "animasi menu/dropdown/toast/skeleton/toggle seperti di galeri", atau minta menambah/mengoreksi animasi di web/app. Untuk prinsip dan review UX umum, pasangkan dengan skill ux-animasi.
 ---
 
 # Luz Motion
@@ -47,7 +47,7 @@ Koleksi animasi UI yang dipelajari dari rekaman layar referensi dok Luz (seri "u
 | Toggle | `switch-ghost-trail` | `switch-tilt-roll`, `switch-confetti-pop` |
 | Toast/notifikasi | `toast-depth-focus` | `toast-button-morph`, `toast-blinds` |
 | Loading konten | `skeleton-blur-focus` | `skeleton-flip-tiles`, `skeleton-comet-outline` |
-| Error input | `inputerr-message-drop`, `inputerr-red-echo` | `inputerr-tilt-wobble` |
+| Error input | `inerr-message-drop`, `inerr-red-echo` | `inerr-tilt-wobble` |
 | Angka berubah | `counter-smooth-count`, `counter-odometer-roll` | `counter-decode-lock` |
 | Hapus item daftar | `swipe-inline-undo` | `swipedel-genie-bin`, `swipe-liquid-delete` |
 

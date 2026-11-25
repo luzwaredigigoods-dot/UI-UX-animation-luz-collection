@@ -107,7 +107,13 @@
   LUZ.buildPrompt = buildPrompt;
 
   /* ---------- gallery UI ---------- */
+  var ORDER = ['Menu & Navigasi', 'Tombol & Toggle', 'Input & Form', 'List & Gesture', 'Kartu & Konten', 'Modal, Sheet & Tooltip',
+    'Feedback & Notifikasi', 'Loading & Skeleton', 'Teks & Angka', 'Transisi Halaman', 'Latar & Efek', 'Prinsip Gerak'];
   function init() {
+    entries.sort(function (a, b) {
+      var d = (ORDER.indexOf(a.cat) + 99) % 99 - (ORDER.indexOf(b.cat) + 99) % 99;
+      return d || 0;
+    });
     var grid = document.getElementById('grid');
     var chips = document.getElementById('chips');
     var q = document.getElementById('q');
@@ -143,10 +149,10 @@
       var stage = el('div', { class: 'g-stage', 'data-id': e.id, 'aria-label': 'Demo ' + e.name });
       var meta = el('div', { class: 'g-meta' });
       meta.innerHTML =
-        '<div class="row1"><code class="id">' + esc(e.id) + '</code><span class="trig">' + esc(e.trigger) + '</span></div>' +
+        '<div class="g-row1"><code class="g-id">' + esc(e.id) + '</code><span class="g-trig">' + esc(e.trigger) + '</span></div>' +
         '<h3>' + esc(e.name) + '</h3>' +
-        '<p class="motion">' + esc(e.motion) + '</p>' +
-        '<p class="timing">' + esc(e.timing) + '</p>';
+        '<p class="g-motion">' + esc(e.motion) + '</p>' +
+        '<p class="g-timing">' + esc(e.timing) + '</p>';
       var actions = el('div', { class: 'g-actions' });
       var pick = el('label', { class: 'g-pick' });
       var cb = el('input', { type: 'checkbox', id: 'pick-' + e.id });
