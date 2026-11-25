@@ -1,8 +1,56 @@
 # Katalog Luz Motion
 
-214 animasi. Sebut ID-nya di prompt, mis. "pakai `menu-circle-reveal` untuk menu di header".
+226 animasi. Sebut ID-nya di prompt, mis. "pakai `menu-circle-reveal` untuk menu di header".
 
 ## Menu & Navigasi
+
+### `menu2-push-back` — Push Back
+- Sumber: Menu · Part 2
+- Pemicu: tap
+- Gerak: Halaman depan mundur: bergeser 120px ke kanan, mengecil ke 0.78, dan miring 3D (rotateY −14°), memperlihatkan menu di belakangnya. Item menu (Home, Explore, Library, Settings) masuk dari kiri 14px sambil memudar dengan stagger 40ms. Ikon ≡ berubah jadi X. Tutup membalik semuanya.
+- Durasi & easing: halaman 420ms cubic-bezier(.3,.8,.3,1) · item 300ms, delay 80–200ms (stagger 40ms) · ikon 300ms
+- Cocok untuk: Menu navigasi utama aplikasi mobile yang ingin terasa berlapis, misalnya menu samping aplikasi klinik.
+- Kode: `gallery/demos/menu-2.js`
+
+### `menu2-kebab-popover` — Kebab Popover
+- Sumber: Menu · Part 2
+- Pemicu: tap
+- Gerak: Tiga titik tombol ⋮ terbang keluar (masing-masing ke kiri-bawah 78px, turun 44/64/84px, stagger 40ms) dan menjadi ikon titik di depan tiap baris menu (Edit, Share, Delete). Bersamaan panel popover membesar dari pojok kanan-atas (scale 0.5→1) dan label baris muncul berurutan. Tutup: titik terbang kembali menjadi ⋮.
+- Durasi & easing: titik 380ms cubic-bezier(.3,1.4,.5,1), stagger 40ms · panel 300ms ease-out · label 200ms delay 150/190/230ms
+- Cocok untuk: Menu aksi per item (lebih banyak/opsi), misalnya kartu pasien atau baris tabel dengan Edit, Bagikan, Hapus.
+- Kode: `gallery/demos/menu-2.js`
+
+### `menu2-gooey-menu` — Gooey Menu
+- Sumber: Menu · Part 2
+- Pemicu: tap
+- Gerak: Empat tombol bulat 32px (kamera, galeri, bintang, kalender) memisah dari tombol utama 44px seperti tetesan: tiap tetes meregang (scale 1.5×0.7) saat lepas, meluncur ke kanan 52/92/132/172px, melewati posisi 4px lalu membulat. Stagger 50ms. Ikon ≡ jadi X. Tutup: tetesan meregang lagi dan tersedot kembali ke tombol utama, urutan terbalik.
+- Durasi & easing: buka 480ms ease-out per tetes, stagger 50ms · tutup 320ms ease-in, stagger 40ms terbalik
+- Cocok untuk: Tombol aksi cepat (FAB) yang membuka beberapa pilihan, misalnya unggah foto, catatan, atau jadwal.
+- Kode: `gallery/demos/menu-2.js`
+
+### `menu2-fold-down` — Fold Down
+- Sumber: Menu · Part 2
+- Pemicu: tap
+- Gerak: Baris-baris dropdown (Design, Motion, Code, Sound) terlipat terbuka satu per satu seperti kertas: tiap baris berputar dari rotateX(−90°) ke 0 dengan engsel di tepi atas, stagger 70ms, sementara wadah daftar membuka dari atas ke bawah (clip-path) seolah mendorong baris berikutnya. Chevron berputar 180°. Tutup: baris terlipat kembali dari bawah ke atas.
+- Durasi & easing: tiap baris 300ms ease-out, stagger 70ms (total ≈510ms) · tutup stagger 50ms terbalik · chevron 300ms
+- Cocok untuk: Dropdown filter atau kategori, misalnya pilih poli, kategori obat, atau jenis laporan.
+- Kode: `gallery/demos/menu-2.js`
+
+### `menu2-button-to-panel` — Button to Panel
+- Sumber: Menu · Part 2
+- Pemicu: tap
+- Gerak: Tombol pil "+ New" (76×32px) di pojok kanan-bawah tumbuh menjadi panel 200×150px: clip-path membuka dari pojok itu ke seluruh panel, warna aksen tombol memudar menjadi permukaan panel. Judul "Create" dan pilihan Note, Photo, Event muncul naik 6px berurutan. X menyusutkan panel kembali menjadi tombol.
+- Durasi & easing: tumbuh 420ms cubic-bezier(.3,1.15,.4,1) (overshoot kecil) · isi 200ms delay 180/230/280ms · susut 350ms
+- Cocok untuk: Tombol buat-baru yang membuka pilihan jenis, misalnya buat catatan, unggah foto pemeriksaan, atau jadwal kontrol.
+- Kode: `gallery/demos/menu-2.js`
+
+### `menu2-command-palette` — Command Palette
+- Sumber: Menu · Part 2
+- Pemicu: tap
+- Gerak: Ketuk ikon cari: latar halaman meredup, palet perintah jatuh dari 14px di atas (scale 0.96→1) dengan pegas kecil. Kueri "set" mengetik sendiri satu huruf per 110ms dengan kursor berkedip, lalu hasil (Settings, Set status, Setup guide) masuk naik 6px berurutan dengan stagger 60ms; baris pertama tersorot. Ketuk lagi untuk menutup (palet memudar ke atas).
+- Durasi & easing: palet 280ms cubic-bezier(.3,1.3,.5,1) · ketik 3×110ms · hasil 220ms, stagger 60ms · tutup 200ms
+- Cocok untuk: Pencarian cepat/perintah di dashboard atau aplikasi web (⌘K), misalnya cari pasien, menu, atau pengaturan.
+- Kode: `gallery/demos/menu-2.js`
 
 ### `menu5-swing-hinge` — Swing Hinge
 - Sumber: Menu · Part 5
@@ -285,6 +333,54 @@
 - Durasi & easing: tekan 100ms · pop 260ms cubic-bezier(.34,1.8,.64,1) · cincin & titik 500ms ease-out
 - Cocok untuk: persetujuan atau pendaftaran penting yang pantas dirayakan (mis. ikut program, setuju consent)
 - Kode: `gallery/demos/checkbox-2.js`
+
+### `iconmorph1-stroke-morph` — Stroke Morph
+- Sumber: Icon Morph · Part 1
+- Pemicu: tap
+- Gerak: Garis-garis ikon sendiri yang berpindah: 3 garis menu berputar ±45° jadi X (garis tengah menyusut ke 0), segitiga Play terbelah dua lalu tiap potongan (clip-path polygon) berubah jadi batang Pause, dan dua garis tanda + berputar dan memendek jadi centang. Semua dengan pegas yang sedikit melewati posisi akhir. Lingkaran latar terisi aksen (scale 0.7→1).
+- Durasi & easing: 450ms cubic-bezier(.3,1.6,.5,1) (overshoot) · isi lingkaran 350ms
+- Cocok untuk: Tombol ikon dua keadaan yang sering dipakai: buka/tutup menu, putar/jeda media, tambah ke daftar.
+- Kode: `gallery/demos/icon-morph-1.js`
+
+### `iconmorph1-spin-swap` — Spin Swap
+- Sumber: Icon Morph · Part 1
+- Pemicu: tap
+- Gerak: Ikon lama berputar −180° sambil mengecil ke 0.3 dan memudar; ikon baru masuk berputar dari 180° ke 0° dan membesar dari 0.3 ke 1 dengan pegas, mulai 100ms setelah ikon lama.
+- Durasi & easing: keluar 300ms ease-in · masuk 350ms cubic-bezier(.3,1.4,.5,1) delay 100ms
+- Cocok untuk: Ganti ikon status yang ingin terasa hidup, misalnya tombol putar/jeda atau simpan ke favorit.
+- Kode: `gallery/demos/icon-morph-1.js`
+
+### `iconmorph1-pen-redraw` — Pen Redraw
+- Sumber: Icon Morph · Part 1
+- Pemicu: tap
+- Gerak: Ikon lama dihapus goresan demi goresan (stroke-dashoffset 0→1), lalu ikon baru digambar ulang oleh "pena" bercahaya: tiap goresan ditarik bergantian berjarak 80ms dengan glow drop-shadow 4px yang memudar, dan isi bentuk padat (Play/Pause) muncul di akhir.
+- Durasi & easing: hapus 220ms ease-in · gambar 380ms ease-out per goresan, mulai 200ms, stagger 80ms · glow 600ms
+- Cocok untuk: Konfirmasi yang ingin terasa "ditulis tangan", misalnya tanda tangan selesai, tugas ditambahkan, atau langkah onboarding.
+- Kode: `gallery/demos/icon-morph-1.js`
+
+### `iconmorph1-melt-drop` — Melt & Drop
+- Sumber: Icon Morph · Part 1
+- Pemicu: tap
+- Gerak: Ikon lama meleleh: memanjang ke bawah (scale 0.8×1.5, turun 6px), kabur (blur 3px), lalu hilang. Ikon baru jatuh dari 16px di atas, mendarat dengan squash (scale 1.2×0.75), memantul kecil (0.95×1.05), lalu diam.
+- Durasi & easing: leleh 380ms ease-in · jatuh 420ms ease-out delay 160ms (squash di 60%)
+- Cocok untuk: Toggle yang playful atau bertema cairan, misalnya pengingat minum, mode tidur, atau tombol di aplikasi anak.
+- Kode: `gallery/demos/icon-morph-1.js`
+
+### `iconmorph1-tumble-flip` — Tumble Flip
+- Sumber: Icon Morph · Part 1
+- Pemicu: tap
+- Gerak: Seluruh tombol berguling dari atas ke bawah (rotateX 0→90° dengan perspective 300px), berganti keadaan saat tegak lurus (ikon, warna, label), lalu berlanjut dari −90° ke 0° sehingga sisi baliknya yang tampak.
+- Durasi & easing: 500ms ease-in-out · pergantian keadaan tepat di 250ms
+- Cocok untuk: Toggle yang ingin terasa seperti kartu dua sisi, misalnya ikuti/berhenti ikuti atau tandai selesai.
+- Kode: `gallery/demos/icon-morph-1.js`
+
+### `iconmorph1-slice-shift` — Slice Shift
+- Sumber: Icon Morph · Part 1
+- Pemicu: tap
+- Gerak: Ikon dipotong jadi 3 strip horizontal (clip-path). Strip ikon lama bergeser ±12px bergantian kiri/kanan sambil memudar dengan stagger 40ms; strip ikon baru masuk dari arah berlawanan dan menyatu kembali di tengah.
+- Durasi & easing: keluar 260ms ease-in, stagger 40ms · masuk 300ms ease-out mulai 140ms, stagger 40ms
+- Cocok untuk: Ganti ikon bergaya digital/glitch, misalnya mode privasi, enkripsi, atau aplikasi bertema teknologi.
+- Kode: `gallery/demos/icon-morph-1.js`
 
 ### `segment-outline-glide` — Outline Glide
 - Sumber: Segmented Control · Part 2

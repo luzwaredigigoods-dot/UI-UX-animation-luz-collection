@@ -1,6 +1,6 @@
 # Luz Motion
 
-A collection of 214 UI/UX animations, learned from 39 screen recordings of animation references (the Drive folder "ui/ux animation"). Each animation:
+A collection of 226 UI/UX animations, learned from 41 screen recordings of animation references (the Drive folder "ui/ux animation"). Each animation:
 
 - has a fixed ID (e.g. `menu-circle-reveal`, `toast-depth-focus`)
 - is rebuilt as an interactive live demo (HTML + CSS + JS vanilla, no libraries)
@@ -49,5 +49,4 @@ Menu & Navigasi · Tombol & Toggle · Input & Form · List & Gesture · Kartu & 
 
 ## Notes
 
-- 2 of the 41 videos in the folder (`05-56-10`, `05-56-44`) are not included yet. They are over the Drive connector's 10 MB limit, and sharing permission for them was not granted.
 - Some cells are simplified (for example the gooey effect without an SVG filter, or a genie effect approximated with clip-path). The details are in the comments of each demo file.

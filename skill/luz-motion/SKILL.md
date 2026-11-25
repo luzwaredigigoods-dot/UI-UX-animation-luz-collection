@@ -1,6 +1,6 @@
 ---
 name: luz-motion
-description: Koleksi animasi UI/UX siap pakai milik dok Luz (Luz Motion), 214 animasi dari menu, tombol/toggle, input, list & swipe, tooltip, sheet, toast, loading/skeleton, progress, badge, angka, teks, pagination, date picker, latar. Tiap animasi punya ID (mis. menu-circle-reveal, switch-ghost-trail), deskripsi gerak, durasi/easing, dan kode referensi. Pakai skill ini setiap kali dok menyebut ID Luz Motion, menempelkan prompt dari galeri Luz Motion, minta "pakai animasi dari koleksi", "ganti animasi X jadi Y", "animasi menu/dropdown/toast/skeleton/toggle seperti di galeri", atau minta menambah/mengoreksi animasi di web/app. Untuk prinsip dan review UX umum, pasangkan dengan skill ux-animasi.
+description: Koleksi animasi UI/UX siap pakai milik dok Luz (Luz Motion), 226 animasi dari menu, tombol/toggle, input, list & swipe, tooltip, sheet, toast, loading/skeleton, progress, badge, angka, teks, pagination, date picker, latar. Tiap animasi punya ID (mis. menu-circle-reveal, switch-ghost-trail), deskripsi gerak, durasi/easing, dan kode referensi. Pakai skill ini setiap kali dok menyebut ID Luz Motion, menempelkan prompt dari galeri Luz Motion, minta "pakai animasi dari koleksi", "ganti animasi X jadi Y", "animasi menu/dropdown/toast/skeleton/toggle seperti di galeri", atau minta menambah/mengoreksi animasi di web/app. Untuk prinsip dan review UX umum, pasangkan dengan skill ux-animasi.
 ---
 
 # Luz Motion
