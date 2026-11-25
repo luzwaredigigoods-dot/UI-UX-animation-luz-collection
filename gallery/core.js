@@ -30,7 +30,7 @@
     try { if (v === undefined) return JSON.parse(localStorage.getItem('luz:' + k)); localStorage.setItem('luz:' + k, JSON.stringify(v)); } catch (e) { return null; }
   }
   function copy(text, btn) {
-    var done = function () { var t = btn.textContent; btn.textContent = 'Tersalin'; btn.classList.add('ok'); setTimeout(function () { btn.textContent = t; btn.classList.remove('ok'); }, 1400); };
+    var done = function () { var t = btn.textContent; btn.textContent = 'Tersalin'; btn.classList.add('g-ok'); setTimeout(function () { btn.textContent = t; btn.classList.remove('g-ok'); }, 1400); };
     var fallback = function () {
       var ta = document.getElementById('copy-fallback');
       ta.value = text; ta.hidden = false; ta.focus(); ta.select();
@@ -122,7 +122,7 @@
 
     cats.forEach(function (c) {
       var n = c === 'Semua' ? entries.length : entries.filter(function (e) { return e.cat === c; }).length;
-      var b = el('button', { class: 'chip', type: 'button', 'data-cat': c }, esc(c) + ' <span>' + n + '</span>');
+      var b = el('button', { class: 'g-chip', type: 'button', 'data-cat': c }, esc(c) + ' <span>' + n + '</span>');
       b.addEventListener('click', function () { activeCat = c; store('cat', c); filter(); });
       chips.appendChild(b);
     });
@@ -139,16 +139,16 @@
     }, { rootMargin: '200px' }) : null;
 
     entries.forEach(function (e) {
-      var card = el('article', { class: 'card', id: 'c-' + e.id, 'data-id': e.id });
-      var stage = el('div', { class: 'stage', 'data-id': e.id, 'aria-label': 'Demo ' + e.name });
-      var meta = el('div', { class: 'meta' });
+      var card = el('article', { class: 'g-card', id: 'c-' + e.id, 'data-id': e.id });
+      var stage = el('div', { class: 'g-stage', 'data-id': e.id, 'aria-label': 'Demo ' + e.name });
+      var meta = el('div', { class: 'g-meta' });
       meta.innerHTML =
         '<div class="row1"><code class="id">' + esc(e.id) + '</code><span class="trig">' + esc(e.trigger) + '</span></div>' +
         '<h3>' + esc(e.name) + '</h3>' +
         '<p class="motion">' + esc(e.motion) + '</p>' +
         '<p class="timing">' + esc(e.timing) + '</p>';
-      var actions = el('div', { class: 'actions' });
-      var pick = el('label', { class: 'pick' });
+      var actions = el('div', { class: 'g-actions' });
+      var pick = el('label', { class: 'g-pick' });
       var cb = el('input', { type: 'checkbox', id: 'pick-' + e.id });
       cb.checked = selected.indexOf(e.id) >= 0;
       pick.appendChild(cb); pick.appendChild(document.createTextNode(' Pilih'));
@@ -156,15 +156,15 @@
         var i = selected.indexOf(e.id);
         if (cb.checked && i < 0) selected.push(e.id);
         if (!cb.checked && i >= 0) selected.splice(i, 1);
-        card.classList.toggle('on', cb.checked); store('sel', selected); tray();
+        card.classList.toggle('g-on', cb.checked); store('sel', selected); tray();
       });
-      var replay = el('button', { type: 'button', class: 'ghost' }, 'Ulang');
+      var replay = el('button', { type: 'button', class: 'g-ghost' }, 'Ulang');
       replay.addEventListener('click', function () { mount(e, stage); stage._mounted = true; });
-      var cp = el('button', { type: 'button', class: 'ghost' }, 'Salin prompt');
+      var cp = el('button', { type: 'button', class: 'g-ghost' }, 'Salin prompt');
       cp.addEventListener('click', function () { copy(buildPrompt([e.id], opts()), cp); });
       actions.appendChild(pick); actions.appendChild(replay); actions.appendChild(cp);
       card.appendChild(stage); card.appendChild(meta); card.appendChild(actions);
-      if (cb.checked) card.classList.add('on');
+      if (cb.checked) card.classList.add('g-on');
       grid.appendChild(card);
       if (io) io.observe(stage); else { mount(e, stage); stage._mounted = true; }
     });
@@ -208,11 +208,11 @@
       out.value = selected.length ? buildPrompt(selected, opts()) : '';
     }
     function tray() {
-      trayEl.classList.toggle('has', selected.length > 0);
+      trayEl.classList.toggle('g-has', selected.length > 0);
       document.getElementById('sel-n').textContent = selected.length;
       trayList.innerHTML = '';
       selected.forEach(function (id) {
-        var b = el('button', { type: 'button', class: 'tag', title: 'Hapus dari pilihan' }, esc(id) + ' <span aria-hidden="true">×</span>');
+        var b = el('button', { type: 'button', class: 'g-tag', title: 'Hapus dari pilihan' }, esc(id) + ' <span aria-hidden="true">×</span>');
         b.addEventListener('click', function () {
           var cb = document.getElementById('pick-' + id); cb.checked = false; cb.dispatchEvent(new Event('change'));
         });
@@ -221,7 +221,7 @@
       render();
     }
     document.getElementById('toggle-tray').addEventListener('click', function () {
-      var open = trayEl.classList.toggle('open');
+      var open = trayEl.classList.toggle('g-open');
       this.setAttribute('aria-expanded', open);
       this.textContent = open ? 'Tutup' : 'Susun prompt';
     });
